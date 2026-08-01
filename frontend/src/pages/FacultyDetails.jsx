@@ -159,7 +159,7 @@ export const FacultyDetails = () => {
           onClick={() => setActiveTab('appraisal')}
           className={`pb-3 transition ${activeTab === 'appraisal' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-650'}`}
         >
-          Self Appraisal & Review
+          Work Report & Review
         </button>
         <button
           onClick={() => setActiveTab('studentFeedback')}
@@ -252,38 +252,39 @@ export const FacultyDetails = () => {
           </div>
         )}
 
-        {/* Tab: Self Appraisal and review evaluations */}
+        {/* Tab: Work Report and review evaluations */}
         {activeTab === 'appraisal' && (
           <div className="space-y-6">
-            {/* Show appraisal self appraisal details */}
+            {/* Show appraisal work report details */}
             {!appraisal ? (
               <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 text-sm">
-                This faculty member has not created their 2026-2027 self appraisal worksheet yet.
+                This faculty member has not created their 2026-2027 work report yet.
               </div>
             ) : (
               <div className="space-y-6">
                 {/* Self Appraisal Details */}
                 <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-4">
-                  <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider pb-2 border-b border-slate-200">Faculty Self-Appraisal Data</h3>
+                  <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider pb-2 border-b border-slate-200 flex justify-between items-center">
+                    <span>Faculty Work Report Data</span>
+                    <span className={`text-xxs font-bold px-2.5 py-1 rounded-md tracking-normal ${
+                      appraisal.selfAppraisal?.submitted
+                        ? 'text-violet-700 bg-violet-50 border border-violet-200'
+                        : 'text-amber-700 bg-amber-50 border border-amber-200'
+                    }`}>
+                      {appraisal.selfAppraisal?.submitted
+                        ? `📅 Report: ${appraisal.selfAppraisal?.reportFromDate || ''} to ${appraisal.selfAppraisal?.reportToDate || ''}`
+                        : '⏳ Pending Faculty Submission'}
+                    </span>
+                  </h3>
                   
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
-                      <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Teaching Hours</span>
-                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.teachingHours || 0} hrs</span>
+                  {appraisal.selfAppraisal?.submitted && (
+                    <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-200/50 text-xs space-y-1">
+                      <span className="text-slate-500 block uppercase tracking-wider text-[10px] font-bold">Report Duration Period</span>
+                      <span className="text-slate-800 font-semibold text-sm">
+                        {appraisal.selfAppraisal?.reportFromDate || 'Not specified'} to {appraisal.selfAppraisal?.reportToDate || 'Not specified'}
+                      </span>
                     </div>
-                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
-                      <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Research Publications</span>
-                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.researchPapersCount || 0} logged</span>
-                    </div>
-                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
-                      <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Books Published</span>
-                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.booksPublishedCount || 0} logged</span>
-                    </div>
-                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
-                      <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Projects Guided</span>
-                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.studentProjectsGuided || 0} students</span>
-                    </div>
-                  </div>
+                  )}
 
                   <div className="space-y-3 pt-2 text-xs">
                     <div>

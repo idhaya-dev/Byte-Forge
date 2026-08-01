@@ -5,25 +5,23 @@ import User from '../models/User.js';
 // @route   POST /api/appraisals/self
 // @access  Private (Faculty only)
 export const submitSelfAppraisal = async (req, res) => {
-  const { academicYear, teachingHours, researchPapersCount, booksPublishedCount, studentProjectsGuided, selfRating, achievements, challengesText, submit } = req.body;
+  const { academicYear, reportFromDate, reportToDate, researchPapersCount, booksPublishedCount, studentProjectsGuided, eventsOrganisedCount, selfRating, achievements, challengesText, submit } = req.body;
 
   try {
-    let appraisal = await Appraisal.findOne({ faculty: req.user.id, academicYear });
-
-    if (appraisal && appraisal.selfAppraisal.submitted) {
-      return res.status(400).json({ message: 'Self appraisal for this academic year has already been submitted and cannot be modified.' });
-    }
+    let appraisal = await Appraisal.findOne({ faculty: req.user.id, academicYear: academicYear || '2026-2027' });
 
     const selfAppraisalData = {
-      teachingHours,
-      researchPapersCount,
-      booksPublishedCount,
-      studentProjectsGuided,
-      selfRating,
-      achievements,
-      challengesText,
-      submitted: submit === true,
-      submittedAt: submit === true ? new Date() : undefined
+      reportFromDate: reportFromDate || '',
+      reportToDate: reportToDate || '',
+      researchPapersCount: Number(researchPapersCount) || 0,
+      booksPublishedCount: Number(booksPublishedCount) || 0,
+      studentProjectsGuided: Number(studentProjectsGuided) || 0,
+      eventsOrganisedCount: Number(eventsOrganisedCount) || 0,
+      selfRating: Number(selfRating) || 5,
+      achievements: achievements ? achievements.trim() : '',
+      challengesText: challengesText ? challengesText.trim() : '',
+      submitted: submit === true ? true : (appraisal?.selfAppraisal?.submitted || false),
+      submittedAt: submit === true ? new Date() : appraisal?.selfAppraisal?.submittedAt,
     };
 
     if (!appraisal) {

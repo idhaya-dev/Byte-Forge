@@ -347,7 +347,7 @@ export const Certificates = () => {
                   value={formData.credentialUrl}
                   onChange={(e) => handleInputChange('credentialUrl', e.target.value)}
                   placeholder="e.g. https://www.credly.com/..."
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
                 />
               </div>
 

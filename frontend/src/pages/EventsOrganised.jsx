@@ -17,6 +17,7 @@ export const EventsOrganised = () => {
     endDate: '',
     role: 'Coordinator',
     description: '',
+    proofFileName: '',
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -76,6 +77,7 @@ export const EventsOrganised = () => {
       endDate: '',
       role: 'Coordinator',
       description: '',
+      proofFileName: '',
     });
     setFormErrors({});
     setIsModalOpen(true);
@@ -90,6 +92,7 @@ export const EventsOrganised = () => {
       endDate: event.endDate ? new Date(event.endDate).toISOString().split('T')[0] : '',
       role: event.role,
       description: event.description || '',
+      proofFileName: event.proofFileName || '',
     });
     setFormErrors({});
     setIsModalOpen(true);
@@ -228,8 +231,15 @@ export const EventsOrganised = () => {
                       {new Date(event.startDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} -{' '}
                       {new Date(event.endDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </td>
-                    <td className="px-6 py-4 text-xs text-slate-500 max-w-xxs truncate" title={event.description}>
-                      {event.description || 'No description'}
+                    <td className="px-6 py-4 text-xs text-slate-500 max-w-xxs">
+                      <div className="space-y-1">
+                        <p className="truncate" title={event.description}>{event.description || 'No description'}</p>
+                        {event.proofFileName && (
+                          <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                            📎 {event.proofFileName}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-center">
                       <div className="flex items-center justify-center gap-3">
@@ -358,8 +368,34 @@ export const EventsOrganised = () => {
                   value={formData.description}
                   onChange={(e) => handleInputChange('description', e.target.value)}
                   placeholder="Detail sponsorship funding, attendee counts, guest speakers, or key workshop outcomes..."
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-none"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-none"
                 ></textarea>
+              </div>
+
+              {/* Upload Proof Document from Device */}
+              <div className="space-y-1">
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">
+                  Upload Proof Document (From Device)
+                </label>
+                <div className="p-3 bg-slate-50 border border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-violet-400 transition">
+                  <input
+                    id="eventProofInput"
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        handleInputChange('proofFileName', file.name);
+                      }
+                    }}
+                    className="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-violet-100 file:text-violet-700 hover:file:bg-violet-200 cursor-pointer"
+                  />
+                  {formData.proofFileName && (
+                    <span className="text-xxs font-bold text-emerald-600 self-start flex items-center gap-1">
+                      ✓ Selected proof file: {formData.proofFileName}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Action Buttons */}

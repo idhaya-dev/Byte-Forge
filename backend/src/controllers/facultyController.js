@@ -376,89 +376,85 @@ export const getAIInsights = async (req, res) => {
     ]);
 
     const appraisal = await Appraisal.findOne({ faculty: facultyId, academicYear: currentYear });
-    const studentFeedback = appraisal?.studentFeedback || {
-      averageTeachingRating: 0,
-      averageCourseCoverageRating: 0,
-      averageApproachabilityRating: 0,
-      totalResponses: 0,
-    };
+    
+    // Check if HOD review is completed
+    const isHodReviewCompleted = appraisal?.hodEvaluation?.submitted || appraisal?.status === 'Completed' || appraisal?.status === 'Approved by HOD';
+    const hodComments = appraisal?.hodEvaluation?.comments || '';
 
-    const selfRating = appraisal?.selfAppraisal?.selfRating || 0;
-    const isAppraisalSubmitted = appraisal?.selfAppraisal?.submitted || false;
+    if (!isHodReviewCompleted) {
+      return res.status(200).json({
+        success: true,
+        isHodReviewCompleted: false,
+        status: appraisal?.status || 'Pending HOD Review',
+        analysisSummary: 'HOD Overall Review Pending. AI Insights & Diagnostic Suggestions will be unlocked once your HOD completes your overall appraisal review and submits their comments.',
+        strengths: [],
+        opportunities: [],
+        recommendations: [],
+        hodComments: null,
+      });
+    }
 
-    // Assemble dynamic list of strengths and growth opportunities
+    // Assemble dynamic list of strengths and growth opportunities based on HOD comments & metrics
     const strengths = [];
     const opportunities = [];
     const recommendations = [];
 
-    // Evaluate Publications
-    if (papersCount >= 3) {
-      strengths.push('Active publication record with multiple journals this session.');
-      recommendations.push('Leverage your current research pace to target high-impact index journals (Q1/Q2 databases).');
-    } else {
-      opportunities.push('Research output frequency is lower than peer averages.');
-      recommendations.push('Set a target to author at least 1 journal paper in the next term. Review co-authoring options with department peers.');
+    // 1. Incorporate Direct HOD Review Comments
+    if (hodComments) {
+      strengths.push(`HOD Review Remarks: "${hodComments}"`);
     }
 
-    if (booksCount > 0) {
-      strengths.push('Demonstrated thought leadership through book publications.');
+    // 2. Evaluate Ratings given by HOD
+    const hodEval = appraisal.hodEvaluation;
+    if (hodEval?.teachingQualityRating >= 4) {
+      strengths.push('Teaching Pedagogy: High rating awarded by HOD for instructional clarity and student engagement.');
+    } else if (hodEval?.teachingQualityRating) {
+      opportunities.push('Teaching Delivery: HOD evaluation indicates potential for adopting more interactive teaching techniques.');
+      recommendations.push('Participate in modern pedagogical workshops as highlighted in your HOD review.');
     }
 
-    // Evaluate Certifications
+    if (hodEval?.researchContributionRating >= 4) {
+      strengths.push('Research Contribution: Highly commended by HOD for publication quality and academic rigor.');
+      recommendations.push('Target high-impact SCOPUS/Web of Science Q1 indexed journals for upcoming research articles.');
+    } else if (hodEval?.researchContributionRating) {
+      opportunities.push('Research Output: HOD evaluation recommends increasing indexing frequency for published articles.');
+      recommendations.push('Set a target to author at least 1 high-impact journal paper this academic term.');
+    }
+
+    if (hodEval?.administrativeContributionRating >= 4) {
+      strengths.push('Departmental Leadership: Commended by HOD for active administrative support and event organization.');
+    }
+
+    // 3. Evaluate Logged Metric Counts
     if (certsCount >= 2) {
-      strengths.push('Committed to professional upskilling with active certifications.');
+      strengths.push('Skill Upgradation: Continuous participation in accredited professional development certifications.');
     } else {
-      opportunities.push('Limited recent formal training and certified skills.');
-      recommendations.push('Enroll in at least one industry-aligned professional certification or FDP course this semester.');
+      opportunities.push('Certifications & Upskilling: HOD feedback encourages enrolling in advanced FDP/SCT courses.');
+      recommendations.push('Enroll in at least one industry-recognized certification or FDP course this term.');
     }
 
-    // Evaluate Leadership/Events
     if (eventsCount >= 2) {
-      strengths.push('Demonstrated strong leadership and event coordination capabilities.');
+      strengths.push('Event Leadership: Demonstrated strong coordination in organizing department seminars and workshops.');
     } else {
-      opportunities.push('Minimal participation in organizing academic workshops or seminars.');
-      recommendations.push('Initiate a project to organize a guest lecture or technical webinar in your area of expertise.');
+      opportunities.push('Event Coordination: HOD review suggests active participation in leading academic events.');
+      recommendations.push('Propose and coordinate a guest lecture or technical webinar in your area of expertise.');
     }
 
-    // Evaluate Student Feedback (if answers exist)
-    if (studentFeedback.totalResponses > 0) {
-      const avgStudentScore = (studentFeedback.averageTeachingRating + studentFeedback.averageCourseCoverageRating + studentFeedback.averageApproachabilityRating) / 3;
-      if (avgStudentScore >= 4.2) {
-        strengths.push('Outstanding student feedback scores indicating excellent student rapport and delivery.');
-      } else if (avgStudentScore > 0 && avgStudentScore < 3.6) {
-        opportunities.push('Student evaluation averages indicate areas of improvement in classroom engagement or approachability.');
-        recommendations.push('Consider collecting formative mid-term feedback to adjust lecture pacing and communication strategies.');
-      }
-    } else {
-      recommendations.push('Encourage your students to complete the term appraisal surveys to populate diagnostic student rating metrics.');
-    }
-
-    // Generate Overall Analysis Summary
-    let analysisSummary = '';
-    if (strengths.length >= 3) {
-      analysisSummary = 'Overall, you are demonstrating exemplary academic performance. Your strengths in publications and academic leadership contribute significantly to the department metrics. Continue sharing best practices with peers.';
-    } else if (opportunities.length >= 2) {
-      analysisSummary = 'Analysis shows a balanced profile, but with key opportunities to improve research output and certified credentials. Allocating structured hours for research planning and FDP training will yield high-impact returns.';
-    } else {
-      analysisSummary = 'Your performance profile is consistent and steady. Focus on submitting your self-appraisal draft and completing ongoing certification modules to solidify your current standings.';
-    }
+    // Generate Overall Analysis Summary incorporating HOD feedback
+    const analysisSummary = `Based on your completed HOD Review ("${hodComments || 'Satisfactory overall performance'}") and active KPI metrics, the AI Diagnostic Engine recommends focusing on the highlighted growth areas below.`;
 
     res.status(200).json({
       success: true,
+      isHodReviewCompleted: true,
+      status: appraisal.status,
+      hodComments: hodComments || 'No text comments recorded.',
       analysisSummary,
-      strengths: strengths.slice(0, 3),
-      opportunities: opportunities.slice(0, 3),
-      recommendations: recommendations.slice(0, 3),
+      strengths: strengths.slice(0, 4),
+      opportunities: opportunities.slice(0, 4),
+      recommendations: recommendations.slice(0, 4),
       metrics: {
         publicationsCount: papersCount + booksCount,
         certificatesCount: certsCount,
         eventsOrganisedCount: eventsCount,
-        studentEvaluationAverage: studentFeedback.totalResponses > 0
-          ? parseFloat(((studentFeedback.averageTeachingRating + studentFeedback.averageCourseCoverageRating + studentFeedback.averageApproachabilityRating) / 3).toFixed(2))
-          : null,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
   }
 };
