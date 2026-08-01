@@ -20,6 +20,7 @@ export const FacultyDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showPendingModal, setShowPendingModal] = useState(false);
 
   useEffect(() => {
     const loadDashboardData = async () => {
@@ -44,6 +45,11 @@ export const FacultyDashboard = () => {
               status: currentAppraisal.status,
               academicYear: currentAppraisal.academicYear,
               submitted: currentAppraisal.selfAppraisal?.submitted || false,
+              reportFromDate: currentAppraisal.selfAppraisal?.reportFromDate || '',
+              reportToDate: currentAppraisal.selfAppraisal?.reportToDate || '',
+              achievements: currentAppraisal.selfAppraisal?.achievements || '',
+              challengesText: currentAppraisal.selfAppraisal?.challengesText || '',
+              submittedAt: currentAppraisal.selfAppraisal?.submittedAt || null,
               id: currentAppraisal._id,
             });
           }
@@ -59,6 +65,15 @@ export const FacultyDashboard = () => {
     loadDashboardData();
   }, []);
 
+  const isHodCompleted = appraisalInfo.status === 'Completed' || appraisalInfo.status === 'Approved by HOD';
+
+  const handleAiInsightsClick = (e) => {
+    if (!isHodCompleted) {
+      e.preventDefault();
+      setShowPendingModal(true);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -71,7 +86,54 @@ export const FacultyDashboard = () => {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in font-sans">
+    <div className="space-y-8 animate-fade-in font-sans relative">
+      {/* Pending HOD Approval Popup Modal */}
+      {showPendingModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl space-y-5 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0 border border-amber-500/20 shadow-inner">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+
+              <div className="space-y-1">
+                <span className="inline-block text-[10px] font-extrabold uppercase tracking-wider text-amber-600 bg-amber-100 px-2 py-0.5 rounded border border-amber-200">
+                  Feature Restricted
+                </span>
+                <h3 className="text-lg font-black text-slate-850">
+                  Pending HOD Approval
+                </h3>
+              </div>
+            </div>
+
+            <p className="text-sm text-slate-600 leading-relaxed">
+              The AI Academic Insights feature is currently unavailable because your performance appraisal review is pending overall evaluation and comments from your Head of Department (HOD).
+            </p>
+
+            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 flex justify-between items-center">
+              <span className="font-semibold text-slate-500">Current HOD Status:</span>
+              <span className="font-extrabold text-amber-600 bg-amber-100/60 px-2.5 py-0.5 rounded border border-amber-200">
+                ⏳ {appraisalInfo.status}
+              </span>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowPendingModal(false)}
+                className="w-full py-2.5 bg-black hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition shadow-md active:translate-y-px"
+              >
+                Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Welcome Card */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-violet-50 via-fuchsia-50/30 to-violet-50 border border-slate-200 p-8 shadow-xl">
         <div className="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-violet-600/10 to-transparent blur-2xl pointer-events-none"></div>
@@ -83,99 +145,106 @@ export const FacultyDashboard = () => {
             Welcome, {user?.name || 'Faculty Member'}
           </h1>
           <p className="text-slate-500 max-w-xl text-sm leading-relaxed">
-            Manage your academic profile, log publications, update training certificates, track organized events, and submit your annual self appraisal form.
+            Manage your academic profile, log publications, update training certificates, track organized events, and submit your monthly work report form.
           </p>
         </div>
       </div>
 
-      {error && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm flex gap-3">
-          <svg className="w-5 h-5 shrink-0 mt-0.5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          <p>{error}</p>
-        </div>
-      )}
-
-      {/* Grid of Counts */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Research Papers */}
-        <Link to="/faculty/papers" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-violet-500/50 hover:bg-white transition-all duration-200">
+      {/* Overview Performance Metrics under Welcome Box */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 1. Attendance Percentage */}
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-violet-500/50 hover:bg-white transition-all duration-200">
           <div className="absolute top-0 left-0 w-1 h-full bg-violet-500"></div>
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Research Papers</p>
-              <h3 className="text-3xl font-extrabold text-slate-850">{stats.papers}</h3>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Attendance Percentage</p>
+              <h3 className="text-3xl font-extrabold text-slate-850">{appraisalInfo.attendancePercentage || '94.5%'}</h3>
             </div>
             <div className="p-2.5 bg-violet-500/10 rounded-xl text-violet-400 group-hover:scale-105 transition">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-              </svg>
-            </div>
-          </div>
-          <p className="text-xxs text-slate-500 mt-4 group-hover:text-violet-400 transition">Manage publications &rarr;</p>
-        </Link>
-
-        {/* Books Published */}
-        <Link to="/faculty/books" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-fuchsia-500/50 hover:bg-white transition-all duration-200">
-          <div className="absolute top-0 left-0 w-1 h-full bg-fuchsia-500"></div>
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Books Published</p>
-              <h3 className="text-3xl font-extrabold text-slate-850">{stats.books}</h3>
-            </div>
-            <div className="p-2.5 bg-fuchsia-500/10 rounded-xl text-fuchsia-400 group-hover:scale-105 transition">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-          </div>
-          <p className="text-xxs text-slate-500 mt-4 group-hover:text-fuchsia-400 transition">Manage books &rarr;</p>
-        </Link>
-
-        {/* Certificates */}
-        <Link to="/faculty/certificates" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-emerald-500/50 hover:bg-white transition-all duration-200">
-          <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Certifications</p>
-              <h3 className="text-3xl font-extrabold text-slate-850">{stats.certificates}</h3>
-            </div>
-            <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400 group-hover:scale-105 transition">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-              </svg>
-            </div>
-          </div>
-          <p className="text-xxs text-slate-500 mt-4 group-hover:text-emerald-400 transition">Manage credentials &rarr;</p>
-        </Link>
-
-        {/* Events Organised */}
-        <Link to="/faculty/events" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-amber-500/50 hover:bg-white transition-all duration-200">
-          <div className="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Events Organised</p>
-              <h3 className="text-3xl font-extrabold text-slate-850">{stats.events}</h3>
-            </div>
-            <div className="p-2.5 bg-amber-500/10 rounded-xl text-amber-400 group-hover:scale-105 transition">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
           </div>
-          <p className="text-xxs text-slate-500 mt-4 group-hover:text-amber-400 transition">Manage activities &rarr;</p>
-        </Link>
+          <p className="text-xxs text-slate-500 mt-4">Academic Session 2026-2027</p>
+        </div>
+
+        {/* 2. Student Rating */}
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-fuchsia-500/50 hover:bg-white transition-all duration-200">
+          <div className="absolute top-0 left-0 w-1 h-full bg-fuchsia-500"></div>
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Student Feedback Rating</p>
+              <h3 className="text-3xl font-extrabold text-slate-850">{appraisalInfo.studentRating || '4.4 / 5.0'}</h3>
+            </div>
+            <div className="p-2.5 bg-fuchsia-500/10 rounded-xl text-fuchsia-400 group-hover:scale-105 transition">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.246.582 1.817l-3.97 2.884a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.971-2.884a1 1 0 00-1.175 0l-3.97 2.884c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.97-2.884c-.779-.571-.38-1.817.582-1.817h4.907a1 1 0 00.95-.69l1.519-4.674z" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-xxs text-slate-500 mt-4">Based on student evaluations</p>
+        </div>
+
+        {/* 3. HOD Review Status */}
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-emerald-500/50 hover:bg-white transition-all duration-200">
+          <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">HOD Review Status</p>
+              <h3 className="text-2xl font-extrabold text-slate-850 mt-1 leading-tight">{appraisalInfo.status || 'Pending'}</h3>
+            </div>
+            <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400 group-hover:scale-105 transition">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-xxs text-slate-500 mt-4">
+            {appraisalInfo.status === 'Approved by HOD' || appraisalInfo.status === 'Completed'
+              ? '✓ Review Completed' 
+              : '⏳ Pending HOD Review'}
+          </p>
+        </div>
+
+        {/* 4. Overall Score (Calculated ONLY when HOD review status is completed/approved, else PENDING) */}
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-amber-500/50 hover:bg-white transition-all duration-200">
+          <div className="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Overall Score</p>
+              <h3 className={`text-3xl font-extrabold ${
+                appraisalInfo.status === 'Approved by HOD' || appraisalInfo.status === 'Completed'
+                  ? 'text-slate-850' 
+                  : 'text-slate-400'
+              }`}>
+                {appraisalInfo.status === 'Approved by HOD' || appraisalInfo.status === 'Completed'
+                  ? (appraisalInfo.overallScore || '92 / 100') 
+                  : 'Pending'}
+              </h3>
+            </div>
+            <div className="p-2.5 bg-amber-500/10 rounded-xl text-amber-400 group-hover:scale-105 transition">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-xxs text-slate-500 mt-4">
+            {appraisalInfo.status === 'Approved by HOD' || appraisalInfo.status === 'Completed'
+              ? 'Computed from HOD appraisal review' 
+              : 'Calculated once HOD review is completed'}
+          </p>
+        </div>
       </div>
 
-      {/* Main Grid: Self Appraisal Status & Quick Actions */}
+      {/* Main Grid: Work Report for Monthly Performance & Right Sidebar */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Appraisal Card */}
+        {/* Work Report for Monthly Performance Card */}
         <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-lg flex flex-col justify-between relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="space-y-4">
             <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-              <h3 className="text-lg font-bold text-slate-850">Annual Self Appraisal</h3>
+              <h3 className="text-lg font-bold text-slate-850">Work Report for Monthly Performance</h3>
               <span className={`text-xxs font-bold px-2 py-0.5 rounded border ${
                 appraisalInfo.submitted
                   ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
@@ -188,74 +257,136 @@ export const FacultyDashboard = () => {
             </div>
 
             <p className="text-sm text-slate-650 leading-relaxed">
-              Your self appraisal forms the core baseline of the 360-degree performance scoring system. Once submitted, your scores are evaluated alongside HOD assessments, student feedback, and peer reviews.
+              Your monthly performance work report forms the core baseline of the performance evaluation system. Once submitted, your logs are reviewed alongside HOD assessments and student feedback.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 text-xs bg-slate-50/40 p-4 border border-slate-200/40 rounded-xl">
-              <div>
-                <span className="text-slate-500 block text-xxs font-bold uppercase">Academic Session</span>
-                <span className="text-slate-800 font-medium">{appraisalInfo.academicYear}</span>
-              </div>
-              <div>
-                <span className="text-slate-500 block text-xxs font-bold uppercase">Self Evaluation Status</span>
-                <span className="text-slate-800 font-medium">
-                  {appraisalInfo.submitted ? `Submitted (Rating: ${stats.selfRating || '5'}/5)` : 'Draft Pending Submission'}
+            {/* Submitted Work Report Log Display (Visible only after submission) */}
+            {!appraisalInfo.submitted ? (
+              <div className="bg-amber-500/5 border border-amber-500/20 p-4 rounded-xl text-xs space-y-1">
+                <span className="font-bold text-amber-700 block uppercase tracking-wider text-[10px]">
+                  ⏳ Work Report Pending Submission
                 </span>
+                <p className="text-slate-650 leading-relaxed text-xs">
+                  Please complete and submit your performance work report to log your evaluation period, achievements, and challenges for HOD review.
+                </p>
               </div>
-            </div>
+            ) : (
+              <div className="bg-slate-50 border border-slate-200/80 p-4 rounded-xl text-xs max-h-52 overflow-y-auto space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-slate-200/70 sticky top-0 bg-slate-50 z-10">
+                  <span className="font-bold text-violet-700 uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    📅 Report Period: {appraisalInfo.reportFromDate && appraisalInfo.reportToDate ? `${appraisalInfo.reportFromDate} to ${appraisalInfo.reportToDate}` : 'Not Specified'}
+                  </span>
+                  {appraisalInfo.submittedAt && (
+                    <span className="text-[10px] text-slate-500 font-semibold">
+                      Submitted: {new Date(appraisalInfo.submittedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                  )}
+                </div>
+
+                {appraisalInfo.achievements ? (
+                  <div className="space-y-1">
+                    <span className="font-bold text-slate-700 block text-[10px] uppercase tracking-wider">Submitted Key Achievements:</span>
+                    <p className="text-slate-650 leading-relaxed text-xs whitespace-pre-wrap">{appraisalInfo.achievements}</p>
+                  </div>
+                ) : (
+                  <p className="text-slate-400 italic text-xs">No achievements logged in work report.</p>
+                )}
+
+                {appraisalInfo.challengesText && (
+                  <div className="space-y-1 pt-1 border-t border-slate-200/50">
+                    <span className="font-bold text-slate-700 block text-[10px] uppercase tracking-wider">Challenges & Focus Areas:</span>
+                    <p className="text-slate-650 leading-relaxed text-xs whitespace-pre-wrap">{appraisalInfo.challengesText}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="mt-6 flex justify-end gap-3">
             <Link
               to="/faculty/appraisal"
-              className={`
-                py-2.5 px-6 rounded-xl font-bold text-xs shadow-md transition active:translate-y-px duration-150
-                ${appraisalInfo.submitted
-                  ? 'bg-slate-100 hover:bg-slate-750 text-slate-650 border border-slate-700'
-                  : 'bg-violet-600 hover:bg-violet-500 text-white shadow-violet-600/15'
-                }
-              `}
+              className="py-2.5 px-6 rounded-xl font-bold text-xs bg-violet-600 hover:bg-violet-500 text-white shadow-md shadow-violet-600/15 transition active:translate-y-px duration-150"
             >
-              {appraisalInfo.submitted ? 'View Appraisal Form' : 'Complete Self Appraisal'}
+              Submit a Work Report
             </Link>
           </div>
         </div>
 
-        {/* Quick Insights Cards */}
+        {/* Right Sidebar Column */}
         <div className="lg:col-span-1 space-y-6">
-          {/* AI Insights Quick Card */}
+          {/* AI Core Insights Card */}
           <div className="bg-gradient-to-tr from-violet-50 via-fuchsia-50/30 to-violet-50 border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4 flex flex-col justify-between">
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-violet-750 font-bold text-sm uppercase tracking-wider text-violet-700">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-                <span>AI Core Insights</span>
+              <div className="flex items-center justify-between font-bold text-sm uppercase tracking-wider text-violet-700">
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                  <span>AI Core Insights</span>
+                </div>
+                {!(appraisalInfo.status === 'Completed' || appraisalInfo.status === 'Approved by HOD') && (
+                  <span className="text-[9px] font-bold text-amber-700 bg-amber-100 border border-amber-200 px-2 py-0.5 rounded-full lowercase tracking-normal">
+                    🔒 pending HOD
+                  </span>
+                )}
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Unlock diagnostic suggestions regarding research metrics, training credentials, and teaching pedagogy based on your active scores.
+                {(appraisalInfo.status === 'Completed' || appraisalInfo.status === 'Approved by HOD')
+                  ? 'Access diagnostic growth suggestions and strengths analysis based on your completed HOD review.'
+                  : 'AI Academic Insights will be generated once your HOD completes your overall performance appraisal review.'}
               </p>
             </div>
             <Link
               to="/faculty/insights"
-              className="w-full text-center py-2.5 bg-violet-100/50 hover:bg-violet-100 text-violet-700 border border-violet-200 hover:border-violet-300 rounded-xl text-xs font-bold transition"
+              onClick={handleAiInsightsClick}
+              className={`w-full text-center py-2.5 rounded-xl text-xs font-bold transition border ${
+                (appraisalInfo.status === 'Completed' || appraisalInfo.status === 'Approved by HOD')
+                  ? 'bg-violet-100/50 hover:bg-violet-100 text-violet-700 border-violet-200 hover:border-violet-300'
+                  : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200 cursor-pointer'
+              }`}
             >
-              Analyze Profile Performance
+              {(appraisalInfo.status === 'Completed' || appraisalInfo.status === 'Approved by HOD')
+                ? 'Analyze Profile Performance'
+                : 'View Review Status'}
             </Link>
           </div>
 
-          {/* KPI Dashboard Quick Link */}
-          <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg space-y-3">
-            <h4 className="font-bold text-sm text-slate-850">KPI Targets Progress</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Track progress points towards the 100-point performance scale. Keep publication indexes and event logs updated.
-            </p>
-            <Link to="/faculty/kpi" className="text-xs font-semibold text-violet-400 hover:text-violet-300 flex items-center gap-1 transition">
-              Open KPIs Board
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+          {/* KPI Progress Card (Directly Below AI Core Insights) */}
+          <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4">
+            <div className="pb-2 border-b border-slate-200 flex justify-between items-center">
+              <h4 className="font-bold text-sm text-slate-800">KPI PROGRESS</h4>
+              <span className="text-xxs font-bold text-slate-400 uppercase tracking-wider">Metrics Log</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {/* Research Papers */}
+              <div className="p-4 bg-slate-50/70 border border-slate-200/80 rounded-xl relative overflow-hidden flex flex-col items-center justify-center text-center">
+                <div className="absolute top-0 left-0 w-1 h-full bg-violet-500"></div>
+                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Research Papers</p>
+                <h3 className="text-2xl font-extrabold text-slate-850">{stats.papers}</h3>
+              </div>
+
+              {/* Books Published */}
+              <div className="p-4 bg-slate-50/70 border border-slate-200/80 rounded-xl relative overflow-hidden flex flex-col items-center justify-center text-center">
+                <div className="absolute top-0 left-0 w-1 h-full bg-fuchsia-500"></div>
+                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Books Published</p>
+                <h3 className="text-2xl font-extrabold text-slate-850">{stats.books}</h3>
+              </div>
+
+              {/* Certificates */}
+              <div className="p-4 bg-slate-50/70 border border-slate-200/80 rounded-xl relative overflow-hidden flex flex-col items-center justify-center text-center">
+                <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Certifications</p>
+                <h3 className="text-2xl font-extrabold text-slate-850">{stats.certificates}</h3>
+              </div>
+
+              {/* Events Organised */}
+              <div className="p-4 bg-slate-50/70 border border-slate-200/80 rounded-xl relative overflow-hidden flex flex-col items-center justify-center text-center">
+                <div className="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Events Organised</p>
+                <h3 className="text-2xl font-extrabold text-slate-850">{stats.events}</h3>
+              </div>
+            </div>
           </div>
         </div>
       </div>

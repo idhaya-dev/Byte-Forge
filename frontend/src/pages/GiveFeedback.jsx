@@ -11,12 +11,34 @@ const RATING_DESCRIPTIONS = {
 };
 
 const RATING_PARAMETERS = [
-  { key: 'teachingEffectiveness', label: 'Teaching Effectiveness', desc: 'Ability to explain concepts, engage students, and clarify doubts.' },
-  { key: 'courseCoverage', label: 'Course Coverage & Pace', desc: 'Coverage of syllabus, pacing of lectures, and depth of explanation.' },
-  { key: 'communicationSkills', label: 'Communication Skills', desc: 'Clarity, voice modulation, and language accessibility.' },
-  { key: 'punctuality', label: 'Punctuality & Discipline', desc: 'Timeliness in arriving, starting lectures, and returning assignments.' },
-  { key: 'supportOutsideClass', label: 'Support Outside Class', desc: 'Availability during office hours, guidance, and project support.' },
+  { 
+    key: 'teachingClarity', 
+    label: 'Teaching Clarity', 
+    desc: 'Clarity of concepts, structure of lectures, and ease of understanding.' 
+  },
+  { 
+    key: 'classroomInteraction', 
+    label: 'Classroom Interaction', 
+    desc: 'Encouraging student participation, questions, and active class discussion.' 
+  },
+  { 
+    key: 'doubtClarification', 
+    label: 'Doubt Clarification', 
+    desc: 'Patience, responsiveness, and thoroughness when resolving student questions.' 
+  },
+  { 
+    key: 'practicalConceptsTaught', 
+    label: 'Practical Concepts Taught', 
+    desc: 'Integration of real-world examples, practical applications, and hands-on demonstrations.' 
+  },
 ];
+
+const SPEED_OPTIONS = ['Slow', 'Normal', 'Fast'];
+const SPEED_CONFIG = {
+  Slow: { label: 'Slow', desc: 'Pacing is slow; could cover more depth', color: 'text-amber-600 bg-amber-50 border-amber-200' },
+  Normal: { label: 'Normal', desc: 'Optimal pacing; balanced and clear', color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
+  Fast: { label: 'Fast', desc: 'Pacing is fast; hard to keep up at times', color: 'text-blue-600 bg-blue-50 border-blue-200' },
+};
 
 export const GiveFeedback = () => {
   const navigate = useNavigate();
@@ -30,13 +52,18 @@ export const GiveFeedback = () => {
   const [academicYear, setAcademicYear] = useState('2026-2027');
   const [semester, setSemester] = useState('');
   const [subjectName, setSubjectName] = useState('');
+  
+  // 5-Star Rating parameters
   const [ratings, setRatings] = useState({
-    teachingEffectiveness: 0,
-    courseCoverage: 0,
-    communicationSkills: 0,
-    punctuality: 0,
-    supportOutsideClass: 0,
+    teachingClarity: 0,
+    classroomInteraction: 0,
+    doubtClarification: 0,
+    practicalConceptsTaught: 0,
   });
+
+  // Slider State for Teaching Speed ('Slow', 'Normal', 'Fast') -> index 0, 1, 2
+  const [speedIndex, setSpeedIndex] = useState(1); // Default to 'Normal' (index 1)
+
   const [comments, setComments] = useState('');
   const [formErrors, setFormErrors] = useState({});
 
@@ -74,7 +101,7 @@ export const GiveFeedback = () => {
 
     RATING_PARAMETERS.forEach((param) => {
       if (ratings[param.key] === 0) {
-        errors[param.key] = `Please rate the '${param.label}' parameter`;
+        errors[param.key] = `Please rate '${param.label}'`;
       }
     });
 
@@ -87,19 +114,23 @@ export const GiveFeedback = () => {
     setMessage({ type: '', text: '' });
 
     if (!validateForm()) {
-      // Scroll to top or error section
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
     setSubmitLoading(true);
     try {
+      const selectedSpeed = SPEED_OPTIONS[speedIndex];
       const payload = {
         facultyId,
         academicYear,
         semester,
         subjectName: subjectName.trim(),
-        ratings,
+        ratings: {
+          ...ratings,
+          teachingSpeed: selectedSpeed,
+        },
+        teachingSpeed: selectedSpeed,
         comments: comments.trim() || undefined,
       };
 
@@ -116,14 +147,13 @@ export const GiveFeedback = () => {
         setSemester('');
         setComments('');
         setRatings({
-          teachingEffectiveness: 0,
-          courseCoverage: 0,
-          communicationSkills: 0,
-          punctuality: 0,
-          supportOutsideClass: 0,
+          teachingClarity: 0,
+          classroomInteraction: 0,
+          doubtClarification: 0,
+          practicalConceptsTaught: 0,
         });
+        setSpeedIndex(1);
 
-        // Redirect after delay
         setTimeout(() => {
           navigate('/student/dashboard');
         }, 3000);
@@ -139,49 +169,61 @@ export const GiveFeedback = () => {
     }
   };
 
-  // Helper component to render stars for a rating parameter
-  const StarRatingSelector = ({ paramKey, currentVal }) => {
-    const [hoverVal, setHoverVal] = useState(0);
+  // Helper component to render a 1 to 5 range slider for a rating parameter
+  const SliderRatingSelector = ({ paramKey, currentVal }) => {
+    const displayVal = currentVal || 3; // Default visual position to 3 if unselected
 
     return (
-      <div className="space-y-2">
-        <div className="flex items-center gap-1.5">
-          {[1, 2, 3, 4, 5].map((star) => {
-            const isHighlighted = star <= (hoverVal || currentVal);
+      <div className="w-full space-y-2.5">
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-slate-500 font-medium">Rating Score (1-5)</span>
+          <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full border transition-colors ${
+            currentVal > 0 
+              ? 'bg-amber-500/10 text-amber-600 border-amber-500/20' 
+              : 'bg-slate-100 text-slate-500 border-slate-200'
+          }`}>
+            {currentVal > 0 ? `${currentVal} / 5 — ${RATING_DESCRIPTIONS[currentVal]}` : 'Slide to Rate (1 to 5)'}
+          </span>
+        </div>
+
+        {/* Range Slider 1 to 5 */}
+        <input
+          type="range"
+          min="1"
+          max="5"
+          step="1"
+          value={displayVal}
+          onChange={(e) => handleRatingChange(paramKey, parseInt(e.target.value, 10))}
+          className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500 focus:outline-none"
+        />
+
+        {/* Number Pills 1, 2, 3, 4, 5 */}
+        <div className="flex justify-between items-center text-xs font-bold pt-0.5">
+          {[1, 2, 3, 4, 5].map((num) => {
+            const isSelected = currentVal === num;
             return (
               <button
                 type="button"
-                key={star}
-                onClick={() => handleRatingChange(paramKey, star)}
-                onMouseEnter={() => setHoverVal(star)}
-                onMouseLeave={() => setHoverVal(0)}
-                className="focus:outline-none transition-transform active:scale-90 duration-100"
+                key={num}
+                onClick={() => handleRatingChange(paramKey, num)}
+                className={`w-8 h-7 rounded-lg border transition-all text-xs font-bold flex items-center justify-center ${
+                  isSelected
+                    ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20 scale-105'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                }`}
+                title={`${num} - ${RATING_DESCRIPTIONS[num]}`}
               >
-                <svg
-                  className={`w-8 h-8 transition-colors ${
-                    isHighlighted
-                      ? 'text-amber-400 fill-amber-400'
-                      : 'text-slate-300 hover:text-slate-400 fill-none'
-                  }`}
-                  viewBox="0 0 20 20"
-                  stroke="currentColor"
-                  strokeWidth={isHighlighted ? 0 : 1.5}
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
+                {num}
               </button>
             );
           })}
-          
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded ml-2 transition-colors ${
-            currentVal > 0 ? 'bg-amber-400/10 text-amber-400 border border-amber-400/20' : 'text-slate-500'
-          }`}>
-            {hoverVal || currentVal > 0 ? RATING_DESCRIPTIONS[hoverVal || currentVal] : 'Select Rating'}
-          </span>
         </div>
       </div>
     );
   };
+
+  const currentSpeed = SPEED_OPTIONS[speedIndex];
+  const speedMeta = SPEED_CONFIG[currentSpeed];
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -198,8 +240,8 @@ export const GiveFeedback = () => {
         <div
           className={`p-4 rounded-xl border text-sm flex gap-3 ${
             message.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-              : 'bg-rose-500/10 border-rose-500/20 text-rose-400'
+              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600'
+              : 'bg-rose-500/10 border-rose-500/20 text-rose-600'
           }`}
         >
           {message.type === 'success' ? (
@@ -236,7 +278,7 @@ export const GiveFeedback = () => {
                 }}
                 disabled={loadingFaculties}
                 className={`
-                  w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm cursor-pointer
+                  w-full bg-slate-50 border text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/80 transition text-sm cursor-pointer
                   ${formErrors.facultyId ? 'border-rose-500/60' : 'border-slate-200 hover:border-slate-300'}
                 `}
               >
@@ -248,7 +290,7 @@ export const GiveFeedback = () => {
                 ))}
               </select>
               {formErrors.facultyId && (
-                <p className="text-xs text-rose-400 font-medium">{formErrors.facultyId}</p>
+                <p className="text-xs text-rose-500 font-medium">{formErrors.facultyId}</p>
               )}
             </div>
 
@@ -267,12 +309,12 @@ export const GiveFeedback = () => {
                 }}
                 placeholder="e.g. Distributed Computing (CS-402)"
                 className={`
-                  w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm
+                  w-full bg-slate-50 border text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/80 transition text-sm
                   ${formErrors.subjectName ? 'border-rose-500/60' : 'border-slate-200 hover:border-slate-300'}
                 `}
               />
               {formErrors.subjectName && (
-                <p className="text-xs text-rose-400 font-medium">{formErrors.subjectName}</p>
+                <p className="text-xs text-rose-500 font-medium">{formErrors.subjectName}</p>
               )}
             </div>
 
@@ -285,7 +327,7 @@ export const GiveFeedback = () => {
                 id="academicYear"
                 value={academicYear}
                 onChange={(e) => setAcademicYear(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm cursor-pointer"
+                className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/80 transition text-sm cursor-pointer"
               >
                 <option value="2026-2027">2026-2027</option>
                 <option value="2025-2026">2025-2026</option>
@@ -306,7 +348,7 @@ export const GiveFeedback = () => {
                   if (formErrors.semester) setFormErrors({ ...formErrors, semester: '' });
                 }}
                 className={`
-                  w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm cursor-pointer
+                  w-full bg-slate-50 border text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/80 transition text-sm cursor-pointer
                   ${formErrors.semester ? 'border-rose-500/60' : 'border-slate-200 hover:border-slate-300'}
                 `}
               >
@@ -321,31 +363,84 @@ export const GiveFeedback = () => {
                 <option value="8th Semester">8th Semester (Even)</option>
               </select>
               {formErrors.semester && (
-                <p className="text-xs text-rose-400 font-medium">{formErrors.semester}</p>
+                <p className="text-xs text-rose-500 font-medium">{formErrors.semester}</p>
               )}
             </div>
           </div>
         </div>
 
-        {/* Card Section 2: Ratings */}
+        {/* Card Section 2: Evaluate Content */}
         <div className="bg-white border border-slate-200 backdrop-blur-md rounded-2xl p-6 shadow-xl space-y-6">
-          <h3 className="text-md font-bold text-slate-850 pb-2 border-b border-slate-200">2. Evaluate Academic Quality</h3>
+          <div className="border-b border-slate-200 pb-2 flex items-center justify-between">
+            <h3 className="text-md font-bold text-slate-850">2. Evaluate Content</h3>
+            <span className="text-xs font-semibold text-slate-400">4 Rating Sliders (1-5) + Speed Slider</span>
+          </div>
 
-          <div className="space-y-6">
+          {/* 4 Clickable 1-5 Sliders */}
+          <div className="space-y-5">
             {RATING_PARAMETERS.map((param) => (
-              <div key={param.key} className="p-4 bg-slate-50/50 border border-slate-200/55 rounded-xl space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-                  <div className="max-w-md">
-                    <h4 className="text-sm font-bold text-slate-850">{param.label}</h4>
-                    <p className="text-xs text-slate-500 mt-0.5">{param.desc}</p>
-                  </div>
-                  <StarRatingSelector paramKey={param.key} currentVal={ratings[param.key]} />
+              <div key={param.key} className="p-4 bg-slate-50/70 border border-slate-200/80 rounded-xl space-y-3">
+                <div>
+                  <h4 className="text-sm font-bold text-slate-800">{param.label}</h4>
+                  <p className="text-xs text-slate-500 mt-0.5">{param.desc}</p>
                 </div>
+                <SliderRatingSelector paramKey={param.key} currentVal={ratings[param.key]} />
                 {formErrors[param.key] && (
-                  <p className="text-xs text-rose-400 font-medium">{formErrors[param.key]}</p>
+                  <p className="text-xs text-rose-500 font-medium">{formErrors[param.key]}</p>
                 )}
               </div>
             ))}
+          </div>
+
+          {/* Teaching Speed Slider Section (Slow / Normal / Fast) */}
+          <div className="p-5 bg-gradient-to-br from-slate-50 to-blue-50/30 border border-blue-100 rounded-xl space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <span>Teaching Speed</span>
+                  <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${speedMeta.color}`}>
+                    {speedMeta.label}
+                  </span>
+                </h4>
+                <p className="text-xs text-slate-500 mt-0.5">{speedMeta.desc}</p>
+              </div>
+            </div>
+
+            {/* Interactive Range Slider */}
+            <div className="pt-2 pb-1 px-2 space-y-3">
+              <input
+                type="range"
+                min="0"
+                max="2"
+                step="1"
+                value={speedIndex}
+                onChange={(e) => setSpeedIndex(parseInt(e.target.value, 10))}
+                className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none"
+              />
+
+              {/* Slider Track Labels: Slow - Normal - Fast */}
+              <div className="flex justify-between items-center text-xs font-bold">
+                {SPEED_OPTIONS.map((opt, idx) => {
+                  const isActive = idx === speedIndex;
+                  return (
+                    <button
+                      type="button"
+                      key={opt}
+                      onClick={() => setSpeedIndex(idx)}
+                      className={`px-3 py-1 rounded-lg border transition-all text-xs font-bold ${
+                        isActive
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20 scale-105'
+                          : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      {opt === 'Slow' && '🐢 Slow'}
+                      {opt === 'Normal' && '⚡ Normal'}
+                      {opt === 'Fast' && '🚀 Fast'}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -361,10 +456,10 @@ export const GiveFeedback = () => {
               rows={4}
               value={comments}
               onChange={(e) => setComments(e.target.value)}
-              placeholder="Provide comments regarding pedagogy, assignments, or suggestions for improvement..."
-              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm resize-y"
+              placeholder="Provide constructive feedback regarding pedagogy, assignments, or suggestions for improvement..."
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/80 transition text-sm resize-y"
             ></textarea>
-            <div className="flex justify-between text-xxs text-slate-500">
+            <div className="flex justify-between text-xxs text-slate-400">
               <span>Do not mention your name, roll number, or other identifying information.</span>
               <span>{comments.length} / 1000 chars</span>
             </div>
@@ -384,7 +479,7 @@ export const GiveFeedback = () => {
           <button
             type="submit"
             disabled={submitLoading}
-            className="py-3 px-8 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-brand-500/20 active:translate-y-px transition flex items-center gap-2"
+            className="py-3 px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 active:translate-y-px transition flex items-center gap-2"
           >
             {submitLoading ? (
               <>
@@ -405,3 +500,4 @@ export const GiveFeedback = () => {
     </div>
   );
 };
+
