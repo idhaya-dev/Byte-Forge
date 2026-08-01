@@ -17,7 +17,7 @@ router.route('/')
   .get(getAppraisals);
 
 router.route('/self')
-  .post(authorize('Faculty'), submitSelfAppraisal);
+  .post(authorize('Faculty', 'HOD'), submitSelfAppraisal);
 
 router.route('/:id')
   .get(getAppraisalById);

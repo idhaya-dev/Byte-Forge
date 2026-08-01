@@ -23,6 +23,14 @@ import { Certificates } from '../pages/Certificates.jsx';
 import { EventsOrganised } from '../pages/EventsOrganised.jsx';
 import { AIInsights } from '../pages/AIInsights.jsx';
 
+// Import Layouts and Pages for HOD module
+import { HodLayout } from '../layouts/HodLayout.jsx';
+import { HodLogin } from '../pages/HodLogin.jsx';
+import { HodDashboard } from '../pages/HodDashboard.jsx';
+import { FacultyManagement } from '../pages/FacultyManagement.jsx';
+import { FacultyDetails } from '../pages/FacultyDetails.jsx';
+import { DepartmentAnalytics } from '../pages/DepartmentAnalytics.jsx';
+
 // Route protection component
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { isAuthenticated, loading, user } = useAuth();
@@ -132,6 +140,7 @@ export const AppRoutes = () => {
       {/* Public Routes */}
       <Route path="/login" element={<StudentLogin />} />
       <Route path="/faculty/login" element={<FacultyLogin />} />
+      <Route path="/hod/login" element={<HodLogin />} />
       <Route path="/register" element={<StudentRegister />} />
       <Route path="/forbidden" element={<ForbiddenPlaceholder />} />
 
@@ -176,12 +185,16 @@ export const AppRoutes = () => {
         path="/hod"
         element={
           <ProtectedRoute allowedRoles={['HOD']}>
-            <HodDashboardPlaceholder />
+            <HodLayout />
           </ProtectedRoute>
         }
       >
         <Route index element={<Navigate to="/hod/dashboard" replace />} />
-        <Route path="dashboard" element={<HodDashboardPlaceholder />} />
+        <Route path="dashboard" element={<HodDashboard />} />
+        <Route path="faculty" element={<FacultyManagement />} />
+        <Route path="faculty/:id" element={<FacultyDetails />} />
+        <Route path="analytics" element={<DepartmentAnalytics />} />
+        <Route path="appraisal" element={<SelfAppraisal />} />
       </Route>
 
       {/* Redirects */}
