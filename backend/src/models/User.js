@@ -39,6 +39,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    registerNumber: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+    },
+    year: {
+      type: String,
+      trim: true,
+    },
     isActive: {
       type: Boolean,
       default: true,

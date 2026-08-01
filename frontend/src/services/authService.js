@@ -15,6 +15,13 @@ export const authService = {
     });
   },
 
+  registerStudent: async (studentData) => {
+    return await apiFetch('/auth/register/student', {
+      method: 'POST',
+      body: studentData,
+    });
+  },
+
   logout: async () => {
     return await apiFetch('/auth/logout', {
       method: 'POST',

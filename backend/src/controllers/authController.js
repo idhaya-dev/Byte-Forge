@@ -114,3 +114,56 @@ export const getUserProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// @desc    Register a new student
+// @route   POST /api/auth/register/student
+// @access  Public
+export const registerStudent = async (req, res) => {
+  const { name, email, password, registerNumber, department, year } = req.body;
+
+  try {
+    // 1. Verify required inputs
+    if (!name || !email || !password || !registerNumber || !department || !year) {
+      return res.status(400).json({ message: 'Please provide all required fields' });
+    }
+
+    // 2. Validate email duplicate
+    const emailExists = await User.findOne({ email });
+    if (emailExists) {
+      return res.status(400).json({ message: 'Email already registered' });
+    }
+
+    // 3. Validate registerNumber duplicate
+    const regNumExists = await User.findOne({ registerNumber });
+    if (regNumExists) {
+      return res.status(400).json({ message: 'Register number already registered' });
+    }
+
+    // 4. Create User with Student role
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: 'Student',
+      department,
+      year,
+      registerNumber,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Student registered successfully',
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        department: user.department,
+        year: user.year,
+        registerNumber: user.registerNumber,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
