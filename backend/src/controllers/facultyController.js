@@ -456,5 +456,10 @@ export const getAIInsights = async (req, res) => {
         publicationsCount: papersCount + booksCount,
         certificatesCount: certsCount,
         eventsOrganisedCount: eventsCount,
+      }
+    });
+  } catch (error) {
+    console.error('Error generating AI insights:', error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
