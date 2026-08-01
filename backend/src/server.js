@@ -12,9 +12,6 @@ import hodRoutes from './routes/hodRoutes.js';
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB Database
-connectDB();
-
 const app = express();
 
 // Middleware
@@ -61,9 +58,18 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Port configuration
-const PORT = process.env.PORT || 5000;
+// Connect to MongoDB and Start Server
+const startServer = async () => {
+  try {
+    await connectDB();
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Critical failure: Server could not be started because database connection failed.', err);
+    process.exit(1);
+  }
+};
 
-app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-});
+startServer();
