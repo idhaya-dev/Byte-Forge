@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth.js';
 
 // Import Layouts and Pages for Student module
 import { StudentLayout } from '../layouts/StudentLayout.jsx';
-import { StudentLogin } from '../pages/StudentLogin.jsx';
+import { Login } from '../pages/Login.jsx';
 import { StudentRegister } from '../pages/StudentRegister.jsx';
 import { StudentDashboard } from '../pages/StudentDashboard.jsx';
 import { GiveFeedback } from '../pages/GiveFeedback.jsx';
@@ -13,7 +13,6 @@ import { StudentAnnouncements } from '../pages/StudentAnnouncements.jsx';
 
 // Import Layouts and Pages for Faculty module
 import { FacultyLayout } from '../layouts/FacultyLayout.jsx';
-import { FacultyLogin } from '../pages/FacultyLogin.jsx';
 import { FacultyDashboard } from '../pages/FacultyDashboard.jsx';
 import { SelfAppraisal } from '../pages/SelfAppraisal.jsx';
 import { FacultyKPI } from '../pages/FacultyKPI.jsx';
@@ -25,7 +24,6 @@ import { AIInsights } from '../pages/AIInsights.jsx';
 
 // Import Layouts and Pages for HOD module
 import { HodLayout } from '../layouts/HodLayout.jsx';
-import { HodLogin } from '../pages/HodLogin.jsx';
 import { HodDashboard } from '../pages/HodDashboard.jsx';
 import { FacultyManagement } from '../pages/FacultyManagement.jsx';
 import { FacultyDetails } from '../pages/FacultyDetails.jsx';
@@ -93,7 +91,7 @@ const HodDashboardPlaceholder = () => {
             360
           </div>
           <div>
-            <span className="font-black text-xl tracking-wider text-white">Faculty360°</span>
+            <span className="font-black text-xl tracking-wider text-white">Academic 360°</span>
             <p className="text-xxs text-emerald-400 font-semibold tracking-widest uppercase">HOD Workspace</p>
           </div>
         </div>
@@ -128,7 +126,7 @@ const HodDashboardPlaceholder = () => {
       </main>
 
       <footer className="py-4 border-t border-slate-900 text-center text-xs text-slate-600">
-        &copy; {new Date().getFullYear()} Faculty360° HOD Management Portal.
+        &copy; {new Date().getFullYear()} Academic 360° HOD Management Portal.
       </footer>
     </div>
   );
@@ -138,9 +136,9 @@ export const AppRoutes = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/login" element={<StudentLogin />} />
-      <Route path="/faculty/login" element={<FacultyLogin />} />
-      <Route path="/hod/login" element={<HodLogin />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/faculty/login" element={<Navigate to="/login" replace />} />
+      <Route path="/hod/login" element={<Navigate to="/login" replace />} />
       <Route path="/register" element={<StudentRegister />} />
       <Route path="/forbidden" element={<ForbiddenPlaceholder />} />
 

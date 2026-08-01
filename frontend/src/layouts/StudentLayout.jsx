@@ -53,18 +53,18 @@ export const StudentLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row font-sans">
+    <div className="h-screen overflow-hidden bg-slate-50 text-slate-800 flex flex-col md:flex-row font-sans">
       {/* Mobile Top Bar */}
-      <div className="md:hidden flex items-center justify-between bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-50">
+      <div className="md:hidden flex items-center justify-between bg-white border-b border-slate-200 p-4 sticky top-0 z-50 shrink-0">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center font-bold text-white shadow-md shadow-brand-500/20">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-white shadow-md">
             360
           </div>
-          <span className="font-bold text-lg tracking-wider text-white">Faculty360</span>
+          <span className="font-bold text-lg tracking-wider text-slate-800">Academic 360</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="text-slate-400 hover:text-white focus:outline-none transition p-1 rounded-md hover:bg-slate-800"
+          className="text-slate-500 hover:text-slate-800 focus:outline-none transition p-1 rounded-md hover:bg-slate-100"
         >
           {mobileMenuOpen ? (
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,94 +83,81 @@ export const StudentLayout = () => {
         ${mobileMenuOpen ? 'block' : 'hidden'}
         md:block
         fixed md:static inset-y-0 left-0 z-40
-        w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between
-        transition-all duration-300 md:h-screen sticky top-0
+        w-64 bg-white border-r border-slate-200 flex flex-col justify-between
+        transition-all duration-300 h-full shrink-0
       `}>
-        <div>
-          {/* Logo */}
-          <div className="hidden md:flex items-center gap-3 px-6 py-6 border-b border-slate-800/80">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center font-extrabold text-white shadow-lg shadow-brand-500/25">
-              360
+        <div className="flex flex-col h-full justify-between">
+          <div>
+            {/* Logo */}
+            <div className="hidden md:flex items-center gap-3 px-6 py-6 border-b border-slate-100">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-extrabold text-white shadow-md">
+                360
+              </div>
+              <div>
+                <span className="font-black text-xl tracking-wider text-slate-800">Academic 360</span>
+                <p className="text-xxs text-blue-600 font-bold tracking-widest uppercase">Student</p>
+              </div>
             </div>
-            <div>
-              <span className="font-black text-xl tracking-wider text-white bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Faculty360</span>
-              <p className="text-xxs text-brand-400 font-semibold tracking-widest uppercase">Student Portal</p>
-            </div>
+
+            {/* Navigation Links */}
+            <nav className="px-4 py-6 space-y-1">
+              {navigation.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`
+                      flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-sm transition-all duration-250
+                      ${isActive
+                        ? 'bg-blue-600 text-white shadow-md shadow-blue-500/10'
+                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                      }
+                    `}
+                  >
+                    {item.icon}
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </nav>
           </div>
 
-          {/* Navigation Links */}
-          <nav className="px-4 py-6 space-y-1">
-            {navigation.map((item) => {
-              const isActive = location.pathname === item.path;
-              return (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`
-                    flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm transition-all duration-250
-                    ${isActive
-                      ? 'bg-brand-600 text-white shadow-md shadow-brand-600/20'
-                      : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
-                    }
-                  `}
-                >
-                  {item.icon}
-                  {item.name}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-
-        {/* Sidebar Footer User Section */}
-        <div className="p-4 border-t border-slate-800/80 bg-slate-900/50">
-          <div className="flex items-center gap-3 mb-4 px-2">
-            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-brand-400">
-              {user?.name ? user.name.charAt(0).toUpperCase() : 'S'}
+          {/* Sidebar Footer User Section (Logout button moved to absolute bottom of side bar) */}
+          <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+            <div className="flex items-center gap-3 mb-4 px-2">
+              <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center font-bold text-blue-600 shadow-sm shrink-0">
+                {user?.name ? user.name.charAt(0).toUpperCase() : 'S'}
+              </div>
+              <div className="overflow-hidden">
+                <p className="text-sm font-bold text-slate-800 truncate">{user?.name || 'Student'}</p>
+                <p className="text-xs text-slate-400 truncate">{user?.department || 'Computer Science'}</p>
+              </div>
             </div>
-            <div className="overflow-hidden">
-              <p className="text-sm font-semibold text-white truncate">{user?.name || 'Student'}</p>
-              <p className="text-xs text-slate-500 truncate">{user?.email || 'student@university.edu'}</p>
-            </div>
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg border border-slate-200 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 text-slate-500 font-bold text-sm transition duration-200"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
+            </button>
           </div>
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg border border-slate-800 hover:border-rose-900/50 hover:bg-rose-950/20 text-slate-400 hover:text-rose-400 font-medium text-sm transition"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Logout
-          </button>
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto min-h-screen flex flex-col">
-        {/* Header - Desktop */}
-        <header className="hidden md:flex items-center justify-between px-8 py-5 bg-slate-950 border-b border-slate-900">
-          <div>
-            <h2 className="text-lg font-semibold text-slate-300">
-              {navigation.find(item => location.pathname === item.path)?.name || 'Student Area'}
-            </h2>
-            <p className="text-xs text-slate-500">Academic Year: 2026-2027</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="px-3 py-1 text-xs font-semibold text-brand-400 bg-brand-500/10 border border-brand-500/20 rounded-full">
-              {user?.department || 'Department'} Student
-            </div>
-          </div>
-        </header>
-
+      {/* Main Content Area - Scrollable */}
+      <main className="flex-1 h-full overflow-y-auto flex flex-col">
         {/* Content Body */}
-        <div className="flex-1 p-6 md:p-8 bg-slate-950/50">
+        <div className="flex-1 p-6 md:p-8 bg-slate-50/30">
           <Outlet />
         </div>
 
         {/* Footer */}
-        <footer className="py-4 px-8 border-t border-slate-900/60 bg-slate-950 text-center text-xs text-slate-600">
-          &copy; {new Date().getFullYear()} Faculty360° Appraisal System. All feedback submissions are securely anonymized.
+        <footer className="py-4 px-8 border-t border-slate-200 bg-white text-center text-xs text-slate-400 shrink-0">
+          &copy; {new Date().getFullYear()} Academic 360° Appraisal System. All feedback submissions are securely anonymized.
         </footer>
       </main>
     </div>

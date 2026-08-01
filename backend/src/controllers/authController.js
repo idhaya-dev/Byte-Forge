@@ -1,14 +1,27 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
-// Helper: Generate JWT token and set in cookie
+// Helper: Generate Access & Refresh JWT tokens and set in cookies
 const sendTokenResponse = (user, statusCode, res) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
+    expiresIn: '15m', // Access token expires in 15 mins
   });
 
+  const refreshToken = jwt.sign(
+    { id: user._id },
+    process.env.JWT_REFRESH_SECRET || 'supersecretrefreshjwtkeyforacademicappraisal360degree',
+    { expiresIn: '7d' } // Refresh token expires in 7 days
+  );
+
   const cookieOptions = {
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+    expires: new Date(Date.now() + 15 * 60 * 1000), // 15 mins
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  };
+
+  const refreshCookieOptions = {
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
@@ -17,6 +30,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .status(statusCode)
     .cookie('token', token, cookieOptions)
+    .cookie('refreshToken', refreshToken, refreshCookieOptions)
     .json({
       success: true,
       token,
@@ -53,7 +67,7 @@ export const registerUser = async (req, res) => {
       designation,
     });
 
-    sendTokenResponse(user, 217, res); // 201 Created
+    sendTokenResponse(user, 201, res);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -88,12 +102,17 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// @desc    Log user out / clear cookie
+// @desc    Log user out / clear cookies
 // @route   POST /api/auth/logout
 // @access  Private
 export const logoutUser = async (req, res) => {
   res.cookie('token', 'none', {
-    expires: new Date(Date.now() + 10 * 1000), // expire in 10s
+    expires: new Date(Date.now() + 5000),
+    httpOnly: true,
+  });
+
+  res.cookie('refreshToken', 'none', {
+    expires: new Date(Date.now() + 5000),
     httpOnly: true,
   });
 
@@ -112,6 +131,34 @@ export const getUserProfile = async (req, res) => {
     res.status(200).json({ success: true, user });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Refresh session tokens
+// @route   POST /api/auth/refresh
+// @access  Public
+export const refreshSession = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken || refreshToken === 'none') {
+    return res.status(401).json({ message: 'Session refresh token missing' });
+  }
+
+  try {
+    const decoded = jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET || 'supersecretrefreshjwtkeyforacademicappraisal360degree'
+    );
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({ message: 'Session user profile not found' });
+    }
+
+    sendTokenResponse(user, 200, res);
+  } catch (error) {
+    console.error('JWT Session Refresh Error:', error.message);
+    res.status(401).json({ message: 'Session expired, please sign in again' });
   }
 };
 

@@ -24,13 +24,35 @@ export const apiFetch = async (endpoint, options = {}) => {
     config.body = JSON.stringify(config.body);
   }
 
-  const response = await fetch(url, config);
+  let response = await fetch(url, config);
 
   // Parse JSON response
   let data = null;
-  const contentType = response.headers.get('content-type');
+  let contentType = response.headers.get('content-type');
   if (contentType && contentType.includes('application/json')) {
     data = await response.json();
+  }
+
+  // Auto-refresh session token on 401 if not loading login or refreshing
+  if (response.status === 401 && endpoint !== '/auth/login' && endpoint !== '/auth/refresh') {
+    try {
+      const refreshResponse = await fetch(`${API_URL}/auth/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+
+      if (refreshResponse.ok) {
+        // Token refreshed successfully, retry the original request
+        response = await fetch(url, config);
+        contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          data = await response.json();
+        }
+      }
+    } catch (refreshErr) {
+      console.error('Session silent refresh failed:', refreshErr);
+    }
   }
 
   if (!response.ok) {

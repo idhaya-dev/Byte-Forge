@@ -97,7 +97,7 @@ export const SelfAppraisal = () => {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-violet-500"></div>
-          <p className="text-sm text-slate-400">Loading appraisal worksheet...</p>
+          <p className="text-sm text-slate-500">Loading appraisal worksheet...</p>
         </div>
       </div>
     );
@@ -108,8 +108,8 @@ export const SelfAppraisal = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white">Self Appraisal Worksheet</h1>
-          <p className="text-sm text-slate-400">
+          <h1 className="text-2xl font-black text-slate-850">Self Appraisal Worksheet</h1>
+          <p className="text-sm text-slate-500">
             Log your annual scores and achievements. Lock the sheet for formal HOD sign-off.
           </p>
         </div>
@@ -161,20 +161,20 @@ export const SelfAppraisal = () => {
       )}
 
       {/* Form */}
-      <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl space-y-6">
-        <h3 className="text-md font-bold text-white pb-2 border-b border-slate-850">Evaluation Parameters</h3>
+      <div className="bg-white border border-slate-200 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-xl space-y-6">
+        <h3 className="text-md font-bold text-slate-850 pb-2 border-b border-slate-200">Evaluation Parameters</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Academic Session */}
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Academic Session
             </label>
             <select
               value={academicYear}
               onChange={(e) => setAcademicYear(e.target.value)}
               disabled={isReadOnly}
-              className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm cursor-pointer disabled:cursor-not-allowed"
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm cursor-pointer disabled:cursor-not-allowed"
             >
               <option value="2026-2027">2026-2027 (Current)</option>
               <option value="2025-2026">2025-2026</option>
@@ -184,7 +184,7 @@ export const SelfAppraisal = () => {
 
           {/* Annual Teaching Hours */}
           <div className="space-y-2">
-            <label htmlFor="teachingHours" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label htmlFor="teachingHours" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Annual Teaching Hours
             </label>
             <input
@@ -194,13 +194,13 @@ export const SelfAppraisal = () => {
               onChange={(e) => setTeachingHours(e.target.value)}
               disabled={isReadOnly}
               placeholder="e.g. 520"
-              className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-350 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
             />
           </div>
 
           {/* Research Publications Count */}
           <div className="space-y-2">
-            <label htmlFor="researchPapersCount" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label htmlFor="researchPapersCount" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Research Publications Count
             </label>
             <input
@@ -210,13 +210,13 @@ export const SelfAppraisal = () => {
               onChange={(e) => setResearchPapersCount(e.target.value)}
               disabled={isReadOnly}
               placeholder="e.g. 3"
-              className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-350 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
             />
           </div>
 
           {/* Books Published Count */}
           <div className="space-y-2">
-            <label htmlFor="booksPublishedCount" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label htmlFor="booksPublishedCount" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Books Published Count
             </label>
             <input
@@ -226,13 +226,13 @@ export const SelfAppraisal = () => {
               onChange={(e) => setBooksPublishedCount(e.target.value)}
               disabled={isReadOnly}
               placeholder="e.g. 1"
-              className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-350 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
             />
           </div>
 
           {/* Student Projects Guided */}
           <div className="space-y-2">
-            <label htmlFor="studentProjectsGuided" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label htmlFor="studentProjectsGuided" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Student Projects Guided
             </label>
             <input
@@ -242,13 +242,13 @@ export const SelfAppraisal = () => {
               onChange={(e) => setStudentProjectsGuided(e.target.value)}
               disabled={isReadOnly}
               placeholder="e.g. 12"
-              className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-350 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm disabled:cursor-not-allowed text-white"
             />
           </div>
 
           {/* Self evaluation performance rating */}
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Self Evaluation Rating
             </label>
             <div className="flex items-center gap-1.5 pt-2">
@@ -279,10 +279,10 @@ export const SelfAppraisal = () => {
         </div>
 
         {/* Text Areas */}
-        <div className="space-y-4 pt-4 border-t border-slate-850">
+        <div className="space-y-4 pt-4 border-t border-slate-200">
           {/* Key Achievements */}
           <div className="space-y-2">
-            <label htmlFor="achievements" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label htmlFor="achievements" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Key Academic & Professional Achievements
             </label>
             <textarea
@@ -292,13 +292,13 @@ export const SelfAppraisal = () => {
               onChange={(e) => setAchievements(e.target.value)}
               disabled={isReadOnly}
               placeholder="Detail your research highlights, syllabus creations, special lectures, or student guidance achievements..."
-              className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-y disabled:cursor-not-allowed"
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-y disabled:cursor-not-allowed"
             ></textarea>
           </div>
 
           {/* Challenges faced */}
           <div className="space-y-2">
-            <label htmlFor="challenges" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label htmlFor="challenges" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Challenges Faced & Recommendations
             </label>
             <textarea
@@ -308,18 +308,18 @@ export const SelfAppraisal = () => {
               onChange={(e) => setChallengesText(e.target.value)}
               disabled={isReadOnly}
               placeholder="Outline specific academic, resource, or infrastructural limitations faced during this session..."
-              className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-y disabled:cursor-not-allowed"
+              className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-y disabled:cursor-not-allowed"
             ></textarea>
           </div>
         </div>
 
         {/* Buttons */}
         {!isReadOnly && (
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-850">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
             <button
               type="button"
               onClick={() => navigate('/faculty/dashboard')}
-              className="py-2.5 px-6 bg-transparent hover:bg-slate-900 border border-slate-850 hover:border-slate-750 text-slate-400 hover:text-slate-200 text-xs font-bold rounded-xl transition"
+              className="py-2.5 px-6 bg-transparent hover:bg-white border border-slate-200 hover:border-slate-750 text-slate-500 hover:text-slate-700 text-xs font-bold rounded-xl transition"
             >
               Cancel
             </button>
@@ -327,7 +327,7 @@ export const SelfAppraisal = () => {
               type="button"
               disabled={submitLoading}
               onClick={() => handleSave(false)}
-              className="py-2.5 px-6 bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5"
+              className="py-2.5 px-6 bg-slate-100 hover:bg-slate-750 border border-slate-700 hover:border-slate-350 text-slate-650 hover:text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5"
             >
               {submitLoading ? 'Saving...' : 'Save as Draft'}
             </button>

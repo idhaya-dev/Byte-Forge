@@ -126,19 +126,19 @@ export const FacultyDetails = () => {
       </div>
 
       {/* Profile Header Summary */}
-      <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center gap-6">
-        <div className="w-16 h-16 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-emerald-400 text-xl shadow">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center gap-6">
+        <div className="w-16 h-16 rounded-full bg-slate-100 border border-slate-700 flex items-center justify-center font-bold text-emerald-400 text-xl shadow">
           {faculty.name ? faculty.name.charAt(0).toUpperCase() : 'F'}
         </div>
         <div className="flex-1 text-center md:text-left space-y-1">
-          <h2 className="text-2xl font-black text-white">{faculty.name}</h2>
+          <h2 className="text-2xl font-black text-slate-850">{faculty.name}</h2>
           <p className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">{faculty.designation || 'Instructor'} &bull; CS Department</p>
           <p className="text-xxs text-slate-500">Email: {faculty.email}</p>
         </div>
 
         {/* Show KPI percentage if finalized */}
         {appraisal?.status === 'Completed' && (
-          <div className="text-center bg-slate-950/80 border border-slate-850 px-6 py-4 rounded-xl">
+          <div className="text-center bg-slate-50/80 border border-slate-200 px-6 py-4 rounded-xl">
             <span className="block text-3xl font-black text-transparent bg-gradient-to-tr from-emerald-400 to-teal-400 bg-clip-text">
               {appraisal.overallScore}%
             </span>
@@ -148,22 +148,22 @@ export const FacultyDetails = () => {
       </div>
 
       {/* Navigation tabs */}
-      <div className="flex border-b border-slate-850 gap-4 text-sm font-semibold">
+      <div className="flex border-b border-slate-200 gap-4 text-sm font-semibold">
         <button
           onClick={() => setActiveTab('works')}
-          className={`pb-3 transition ${activeTab === 'works' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-300'}`}
+          className={`pb-3 transition ${activeTab === 'works' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-650'}`}
         >
           Activity Logs
         </button>
         <button
           onClick={() => setActiveTab('appraisal')}
-          className={`pb-3 transition ${activeTab === 'appraisal' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-300'}`}
+          className={`pb-3 transition ${activeTab === 'appraisal' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-650'}`}
         >
           Self Appraisal & Review
         </button>
         <button
           onClick={() => setActiveTab('studentFeedback')}
-          className={`pb-3 transition ${activeTab === 'studentFeedback' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-300'}`}
+          className={`pb-3 transition ${activeTab === 'studentFeedback' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-650'}`}
         >
           Student Feedback Ratings
         </button>
@@ -175,15 +175,15 @@ export const FacultyDetails = () => {
         {activeTab === 'works' && (
           <div className="space-y-8">
             {/* Research papers lists */}
-            <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Research Publications ({papers.length})</h3>
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-4">
+              <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider">Research Publications ({papers.length})</h3>
               {papers.length === 0 ? (
                 <p className="text-xs text-slate-500">No research papers logged by this instructor.</p>
               ) : (
                 <div className="divide-y divide-slate-800/40 space-y-2.5">
                   {papers.map((p) => (
                     <div key={p._id} className="pt-2 text-xs">
-                      <p className="font-semibold text-white">
+                      <p className="font-semibold text-slate-700">
                         {p.url ? (
                           <a href={p.url} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 underline">
                             {p.title}
@@ -200,15 +200,15 @@ export const FacultyDetails = () => {
             </div>
 
             {/* Books published lists */}
-            <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Authored Books ({books.length})</h3>
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-4">
+              <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider">Authored Books ({books.length})</h3>
               {books.length === 0 ? (
                 <p className="text-xs text-slate-500">No books or monograph chapters logged.</p>
               ) : (
                 <div className="divide-y divide-slate-800/40 space-y-2.5">
                   {books.map((b) => (
                     <div key={b._id} className="pt-2 text-xs">
-                      <p className="font-semibold text-white">{b.title}</p>
+                      <p className="font-semibold text-slate-700">{b.title}</p>
                       <p className="text-slate-500 mt-1">{b.publisher} &bull; {b.publicationYear} (ISBN: {b.isbn || 'N/A'})</p>
                     </div>
                   ))}
@@ -217,15 +217,15 @@ export const FacultyDetails = () => {
             </div>
 
             {/* Certificates list */}
-            <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Certifications & Training ({certificates.length})</h3>
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-4">
+              <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider">Certifications & Training ({certificates.length})</h3>
               {certificates.length === 0 ? (
                 <p className="text-xs text-slate-500">No licenses or development certifications logged.</p>
               ) : (
                 <div className="divide-y divide-slate-800/40 space-y-2.5">
                   {certificates.map((c) => (
                     <div key={c._id} className="pt-2 text-xs">
-                      <p className="font-semibold text-white">{c.title}</p>
+                      <p className="font-semibold text-slate-700">{c.title}</p>
                       <p className="text-slate-500 mt-1">{c.issuingOrganization} &bull; Issued {new Date(c.issueDate).toLocaleDateString()}</p>
                     </div>
                   ))}
@@ -234,15 +234,15 @@ export const FacultyDetails = () => {
             </div>
 
             {/* Coordinated Events list */}
-            <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Events Organised ({events.length})</h3>
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-4">
+              <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider">Events Organised ({events.length})</h3>
               {events.length === 0 ? (
                 <p className="text-xs text-slate-500">No conferences or workshops coordinated.</p>
               ) : (
                 <div className="divide-y divide-slate-800/40 space-y-2.5">
                   {events.map((e) => (
                     <div key={e._id} className="pt-2 text-xs">
-                      <p className="font-semibold text-white">{e.title}</p>
+                      <p className="font-semibold text-slate-700">{e.title}</p>
                       <p className="text-slate-500 mt-1">Role: {e.role} &bull; ({e.eventType})</p>
                     </div>
                   ))}
@@ -257,44 +257,44 @@ export const FacultyDetails = () => {
           <div className="space-y-6">
             {/* Show appraisal self appraisal details */}
             {!appraisal ? (
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-12 text-center text-slate-500 text-sm">
+              <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 text-sm">
                 This faculty member has not created their 2026-2027 self appraisal worksheet yet.
               </div>
             ) : (
               <div className="space-y-6">
                 {/* Self Appraisal Details */}
-                <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-4">
-                  <h3 className="text-sm font-bold text-white uppercase tracking-wider pb-2 border-b border-slate-800">Faculty Self-Appraisal Data</h3>
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-4">
+                  <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider pb-2 border-b border-slate-200">Faculty Self-Appraisal Data</h3>
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                    <div className="bg-slate-950/40 p-3 rounded-lg border border-slate-850/50">
+                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
                       <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Teaching Hours</span>
-                      <span className="text-white font-semibold">{appraisal.selfAppraisal?.teachingHours || 0} hrs</span>
+                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.teachingHours || 0} hrs</span>
                     </div>
-                    <div className="bg-slate-950/40 p-3 rounded-lg border border-slate-850/50">
+                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
                       <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Research Publications</span>
-                      <span className="text-white font-semibold">{appraisal.selfAppraisal?.researchPapersCount || 0} logged</span>
+                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.researchPapersCount || 0} logged</span>
                     </div>
-                    <div className="bg-slate-950/40 p-3 rounded-lg border border-slate-850/50">
+                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
                       <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Books Published</span>
-                      <span className="text-white font-semibold">{appraisal.selfAppraisal?.booksPublishedCount || 0} logged</span>
+                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.booksPublishedCount || 0} logged</span>
                     </div>
-                    <div className="bg-slate-950/40 p-3 rounded-lg border border-slate-850/50">
+                    <div className="bg-slate-50/40 p-3 rounded-lg border border-slate-200/50">
                       <span className="text-slate-500 block uppercase tracking-wider text-[9px] font-bold">Projects Guided</span>
-                      <span className="text-white font-semibold">{appraisal.selfAppraisal?.studentProjectsGuided || 0} students</span>
+                      <span className="text-slate-800 font-semibold">{appraisal.selfAppraisal?.studentProjectsGuided || 0} students</span>
                     </div>
                   </div>
 
                   <div className="space-y-3 pt-2 text-xs">
                     <div>
-                      <span className="font-bold text-slate-400 block mb-1">Key Achievements:</span>
-                      <p className="text-slate-300 bg-slate-950/30 p-3 border border-slate-850 rounded-xl leading-relaxed">
+                      <span className="font-bold text-slate-500 block mb-1">Key Achievements:</span>
+                      <p className="text-slate-650 bg-slate-50/30 p-3 border border-slate-200 rounded-xl leading-relaxed">
                         {appraisal.selfAppraisal?.achievements || 'No text submitted.'}
                       </p>
                     </div>
                     <div>
-                      <span className="font-bold text-slate-400 block mb-1">Challenges faced:</span>
-                      <p className="text-slate-300 bg-slate-950/30 p-3 border border-slate-850 rounded-xl leading-relaxed">
+                      <span className="font-bold text-slate-500 block mb-1">Challenges faced:</span>
+                      <p className="text-slate-650 bg-slate-50/30 p-3 border border-slate-200 rounded-xl leading-relaxed">
                         {appraisal.selfAppraisal?.challengesText || 'No text submitted.'}
                       </p>
                     </div>
@@ -303,8 +303,8 @@ export const FacultyDetails = () => {
 
                 {/* HOD Evaluation Form block */}
                 {appraisal.selfAppraisal?.submitted ? (
-                  <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-6">
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider pb-2 border-b border-slate-800 flex justify-between items-center">
+                  <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-6">
+                    <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider pb-2 border-b border-slate-200 flex justify-between items-center">
                       <span>HOD Appraisal Assessment Rubric</span>
                       {isEvaluationLocked && (
                         <span className="text-xxs px-2 py-0.5 border border-emerald-500/30 bg-emerald-500/10 text-emerald-450 rounded text-emerald-450">
@@ -329,7 +329,7 @@ export const FacultyDetails = () => {
                         { label: 'General Conduct & Professionalism', rating: generalConductRating, setRating: setGeneralConductRating },
                       ].map((item) => (
                         <div key={item.label} className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                          <span className="text-xs font-semibold text-slate-300">{item.label}</span>
+                          <span className="text-xs font-semibold text-slate-650">{item.label}</span>
                           <div className="flex items-center gap-1">
                             {[1, 2, 3, 4, 5].map((star) => (
                               <button
@@ -356,25 +356,25 @@ export const FacultyDetails = () => {
 
                     {/* Review comments */}
                     <div className="space-y-2 pt-2">
-                      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest">HOD Evaluator Review Comments</label>
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest">HOD Evaluator Review Comments</label>
                       <textarea
                         rows={4}
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
                         disabled={isEvaluationLocked}
                         placeholder="Detail performance findings, research support directives, or administrative suggestions for this faculty member..."
-                        className="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/80 transition text-sm resize-none disabled:cursor-not-allowed"
+                        className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/80 transition text-sm resize-none disabled:cursor-not-allowed"
                       ></textarea>
                     </div>
 
                     {/* Form actions */}
                     {!isEvaluationLocked && (
-                      <div className="flex justify-end gap-3 pt-4 border-t border-slate-850">
+                      <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
                         <button
                           type="button"
                           disabled={saveLoading}
                           onClick={() => handleEvaluationSubmit(false)}
-                          className="py-2 px-5 bg-slate-800 hover:bg-slate-750 text-slate-350 border border-slate-700 text-xs font-bold rounded-xl transition"
+                          className="py-2 px-5 bg-slate-100 hover:bg-slate-750 text-slate-650 border border-slate-700 text-xs font-bold rounded-xl transition"
                         >
                           {saveLoading ? 'Saving...' : 'Save Draft'}
                         </button>
@@ -394,7 +394,7 @@ export const FacultyDetails = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="p-6 border border-slate-800 bg-slate-900/40 rounded-2xl text-center text-slate-500 text-sm">
+                  <div className="p-6 border border-slate-200 bg-white rounded-2xl text-center text-slate-500 text-sm">
                     This faculty member has created a draft but **has not submitted their appraisal** for verification. Evaluation rubrics will become active when they finalize and lock their worksheet.
                   </div>
                 )}
@@ -407,12 +407,12 @@ export const FacultyDetails = () => {
         {activeTab === 'studentFeedback' && (
           <div className="space-y-6">
             {!appraisal ? (
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-12 text-center text-slate-500 text-sm">
+              <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 text-sm">
                 No active appraisal records exist to fetch student survey scores.
               </div>
             ) : (
-              <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-md space-y-6">
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider pb-2 border-b border-slate-800">
+              <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-md space-y-6">
+                <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider pb-2 border-b border-slate-200">
                   Student Survey Aggregated feedback ({appraisal.studentFeedback?.totalResponses || 0} responses)
                 </h3>
 
@@ -424,10 +424,10 @@ export const FacultyDetails = () => {
                   ].map((row) => (
                     <div key={row.label} className="space-y-2">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-semibold text-slate-300">{row.label}</span>
-                        <span className="font-bold text-white">{row.score.toFixed(1)} / 5.0 ★</span>
+                        <span className="font-semibold text-slate-650">{row.label}</span>
+                        <span className="font-bold text-slate-800">{row.score.toFixed(1)} / 5.0 ★</span>
                       </div>
-                      <div className="w-full h-2 bg-slate-950 border border-slate-850 rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-slate-50 border border-slate-200 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-emerald-500 rounded-full transition-all duration-300"
                           style={{ width: `${(row.score / 5) * 100}%` }}

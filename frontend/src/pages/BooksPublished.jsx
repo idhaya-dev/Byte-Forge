@@ -143,8 +143,8 @@ export const BooksPublished = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white">Books Published</h1>
-          <p className="text-sm text-slate-400">Log and manage your published text books, research monographs, or book chapters.</p>
+          <h1 className="text-2xl font-black text-slate-850">Books Published</h1>
+          <p className="text-sm text-slate-500">Log and manage your published text books, research monographs, or book chapters.</p>
         </div>
         <button
           onClick={handleOpenAdd}
@@ -181,23 +181,23 @@ export const BooksPublished = () => {
 
       {/* Books Table */}
       {books.length === 0 ? (
-        <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-12 text-center space-y-4">
-          <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-650">
+        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center space-y-4">
+          <div className="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center mx-auto text-slate-650">
             <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
           <div className="max-w-sm mx-auto space-y-1">
-            <h3 className="text-white font-bold">No books logged</h3>
-            <p className="text-slate-400 text-xs leading-relaxed">Add details of books published or book chapters authored to update your performance metrics.</p>
+            <h3 className="text-slate-850 font-bold">No books logged</h3>
+            <p className="text-slate-500 text-xs leading-relaxed">Add details of books published or book chapters authored to update your performance metrics.</p>
           </div>
         </div>
       ) : (
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white border border-slate-200 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-400 text-xxs font-bold uppercase tracking-wider">
+                <tr className="bg-slate-50/60 border-b border-slate-200 text-slate-500 text-xxs font-bold uppercase tracking-wider">
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Publisher</th>
                   <th className="px-6 py-4">Year</th>
@@ -205,9 +205,9 @@ export const BooksPublished = () => {
                   <th className="px-6 py-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50 text-sm text-slate-350">
+              <tbody className="divide-y divide-slate-800/50 text-sm text-slate-650">
                 {books.map((book) => (
-                  <tr key={book._id} className="hover:bg-slate-950/30 transition">
+                  <tr key={book._id} className="hover:bg-slate-50/30 transition">
                     <td className="px-6 py-4 font-semibold text-white max-w-xs truncate">
                       {book.url ? (
                         <a href={book.url} target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 underline transition">
@@ -217,17 +217,17 @@ export const BooksPublished = () => {
                         book.title
                       )}
                     </td>
-                    <td className="px-6 py-4 text-slate-400 text-xs">{book.publisher}</td>
+                    <td className="px-6 py-4 text-slate-500 text-xs">{book.publisher}</td>
                     <td className="px-6 py-4 text-xs">{book.publicationYear}</td>
-                    <td className="px-6 py-4 text-xs text-slate-450">{book.isbn || 'N/A'}</td>
+                    <td className="px-6 py-4 text-xs text-slate-500">{book.isbn || 'N/A'}</td>
                     <td className="px-6 py-4 text-center">
                       <div className="flex items-center justify-center gap-3">
-                        <button onClick={() => handleOpenEdit(book)} className="p-1.5 rounded-lg border border-slate-800 hover:border-slate-700 hover:bg-slate-850 text-slate-400 hover:text-slate-200 transition">
+                        <button onClick={() => handleOpenEdit(book)} className="p-1.5 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                           </svg>
                         </button>
-                        <button onClick={() => handleDelete(book._id)} className="p-1.5 rounded-lg border border-slate-800 hover:border-rose-900/50 hover:bg-rose-950/20 text-slate-400 hover:text-rose-400 transition">
+                        <button onClick={() => handleDelete(book._id)} className="p-1.5 rounded-lg border border-slate-200 hover:border-rose-900/50 hover:bg-rose-950/20 text-slate-500 hover:text-rose-400 transition">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
@@ -244,16 +244,16 @@ export const BooksPublished = () => {
 
       {/* Editor Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative">
+        <div className="fixed inset-0 bg-slate-50/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative">
             <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
 
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
-              <h3 className="font-bold text-white text-md">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-white">
+              <h3 className="font-bold text-slate-850 text-md">
                 {editingId ? 'Edit Book Entry' : 'Add Book Entry'}
               </h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white transition">
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -264,14 +264,14 @@ export const BooksPublished = () => {
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {/* Book Title */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Book Title</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Book Title</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
                   placeholder="e.g. Core Principles of Machine Learning"
-                  className={`w-full bg-slate-950 border text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
-                    formErrors.title ? 'border-rose-500/60' : 'border-slate-800'
+                  className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
+                    formErrors.title ? 'border-rose-500/60' : 'border-slate-200'
                   }`}
                 />
                 {formErrors.title && <p className="text-xxs text-rose-450 font-medium">{formErrors.title}</p>}
@@ -279,14 +279,14 @@ export const BooksPublished = () => {
 
               {/* Publisher */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Publisher</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Publisher</label>
                 <input
                   type="text"
                   value={formData.publisher}
                   onChange={(e) => handleInputChange('publisher', e.target.value)}
                   placeholder="e.g. Oxford University Press"
-                  className={`w-full bg-slate-950 border text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
-                    formErrors.publisher ? 'border-rose-500/60' : 'border-slate-800'
+                  className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
+                    formErrors.publisher ? 'border-rose-500/60' : 'border-slate-200'
                   }`}
                 />
                 {formErrors.publisher && <p className="text-xxs text-rose-450 font-medium">{formErrors.publisher}</p>}
@@ -295,48 +295,48 @@ export const BooksPublished = () => {
               {/* Grid: Year and ISBN */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Publication Year</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Publication Year</label>
                   <input
                     type="number"
                     value={formData.publicationYear}
                     onChange={(e) => handleInputChange('publicationYear', e.target.value)}
-                    className={`w-full bg-slate-950 border text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
-                      formErrors.publicationYear ? 'border-rose-500/60' : 'border-slate-800'
+                    className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
+                      formErrors.publicationYear ? 'border-rose-500/60' : 'border-slate-200'
                     }`}
                   />
                   {formErrors.publicationYear && <p className="text-xxs text-rose-450 font-medium">{formErrors.publicationYear}</p>}
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">ISBN</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">ISBN</label>
                   <input
                     type="text"
                     value={formData.isbn}
                     onChange={(e) => handleInputChange('isbn', e.target.value)}
                     placeholder="e.g. 978-3-16-148410-0"
-                    className="w-full bg-slate-950 border border-slate-800 text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
                   />
                 </div>
               </div>
 
               {/* Book Link */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Book URL</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Book URL</label>
                 <input
                   type="url"
                   value={formData.url}
                   onChange={(e) => handleInputChange('url', e.target.value)}
                   placeholder="e.g. https://www.amazon.com/..."
-                  className="w-full bg-slate-950 border border-slate-800 text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
                 />
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="py-2 px-5 bg-transparent hover:bg-slate-800 border border-slate-800 text-slate-450 text-xs font-semibold rounded-xl transition"
+                  className="py-2 px-5 bg-transparent hover:bg-slate-100 border border-slate-200 text-slate-500 text-xs font-semibold rounded-xl transition"
                 >
                   Cancel
                 </button>

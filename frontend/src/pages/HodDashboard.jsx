@@ -49,7 +49,7 @@ export const HodDashboard = () => {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-emerald-500"></div>
-          <p className="text-sm text-slate-400">Loading department statistics...</p>
+          <p className="text-sm text-slate-500">Loading department statistics...</p>
         </div>
       </div>
     );
@@ -63,16 +63,16 @@ export const HodDashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in font-sans">
       {/* Welcome banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-emerald-950/20 to-slate-900 border border-slate-800/80 p-8 shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50/30 to-emerald-50 border border-slate-200 p-8 shadow-xl">
         <div className="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-emerald-600/10 to-transparent blur-2xl pointer-events-none"></div>
         <div className="relative z-10 space-y-2">
           <div className="inline-block px-3 py-1 rounded-full text-xxs font-bold uppercase tracking-wider text-emerald-450 text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
             Administrative Control Panel
           </div>
-          <h1 className="text-3xl font-black text-white">
+          <h1 className="text-3xl font-black text-slate-850">
             Welcome, {user?.name || 'Department Head'}
           </h1>
-          <p className="text-slate-400 max-w-xl text-sm leading-relaxed">
+          <p className="text-slate-500 max-w-xl text-sm leading-relaxed">
             Manage your department faculty roster, review annual appraisal sheets, grade achievements, and monitor department-wide student feedbacks and publications.
           </p>
         </div>
@@ -90,12 +90,12 @@ export const HodDashboard = () => {
       {/* Analytics Counts Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Faculty */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Total Faculty</p>
-              <h3 className="text-3xl font-extrabold text-white">{analytics.totalFaculty}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{analytics.totalFaculty}</h3>
             </div>
             <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -107,12 +107,12 @@ export const HodDashboard = () => {
         </div>
 
         {/* Pending Reviews */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Pending Reviews</p>
-              <h3 className="text-3xl font-extrabold text-white">{analytics.pendingReviews}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{analytics.pendingReviews}</h3>
             </div>
             <div className="p-2.5 bg-amber-500/10 rounded-xl text-amber-400">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -124,12 +124,12 @@ export const HodDashboard = () => {
         </div>
 
         {/* Completed Appraisals */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Finalized Reviews</p>
-              <h3 className="text-3xl font-extrabold text-white">{analytics.completedReviews}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{analytics.completedReviews}</h3>
             </div>
             <div className="p-2.5 bg-blue-500/10 rounded-xl text-blue-400">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,12 +141,12 @@ export const HodDashboard = () => {
         </div>
 
         {/* Avg Overall Score */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Avg Score (KPI)</p>
-              <h3 className="text-3xl font-extrabold text-white">{analytics.avgOverallScore}%</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{analytics.avgOverallScore}%</h3>
             </div>
             <div className="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -161,10 +161,10 @@ export const HodDashboard = () => {
       {/* Main Grid: Pending Appraisals & Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Pending Reviews Table */}
-        <div className="lg:col-span-2 bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg flex flex-col justify-between overflow-hidden">
+        <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-lg flex flex-col justify-between overflow-hidden">
           <div className="space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-white">Pending Appraisals Evaluation</h3>
+            <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-850">Pending Appraisals Evaluation</h3>
               <span className="text-xxs font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
                 Action Required ({pendingFacultyReviews.length})
               </span>
@@ -181,27 +181,27 @@ export const HodDashboard = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-800 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                    <tr className="border-b border-slate-200 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
                       <th className="py-3 pr-4">Faculty Member</th>
                       <th className="py-3 px-4">Designation</th>
                       <th className="py-3 px-4">Self Rating</th>
                       <th className="py-3 pl-4 text-right">Review</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/40 text-sm text-slate-350">
+                  <tbody className="divide-y divide-slate-800/40 text-sm text-slate-650">
                     {pendingFacultyReviews.map((faculty) => (
-                      <tr key={faculty._id} className="hover:bg-slate-950/20 transition">
-                        <td className="py-3 pr-4 font-semibold text-white">
+                      <tr key={faculty._id} className="hover:bg-slate-50/20 transition">
+                        <td className="py-3 pr-4 font-semibold text-slate-800">
                           {faculty.name}
                         </td>
-                        <td className="py-3 px-4 text-xs text-slate-400">{faculty.designation}</td>
-                        <td className="py-3 px-4 text-xs font-semibold text-emerald-450">
+                        <td className="py-3 px-4 text-xs text-slate-500">{faculty.designation}</td>
+                        <td className="py-3 px-4 text-xs font-semibold text-emerald-600">
                           {faculty.selfRating ? `${faculty.selfRating} / 5 ★` : 'N/A'}
                         </td>
                         <td className="py-3 pl-4 text-right">
                           <Link
                             to={`/hod/faculty/${faculty._id}`}
-                            className="inline-block py-1.5 px-4 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-450 text-emerald-450 text-xxs font-bold rounded-lg border border-emerald-500/25 transition"
+                            className="inline-block py-1.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xxs font-bold rounded-lg border border-emerald-200 transition"
                           >
                             Evaluate
                           </Link>
@@ -218,30 +218,30 @@ export const HodDashboard = () => {
         {/* Quick Utilities sidebar */}
         <div className="lg:col-span-1 space-y-6">
           {/* Department Analytics Quick Card */}
-          <div className="bg-gradient-to-tr from-slate-900 to-emerald-950/10 border border-emerald-900/30 p-6 rounded-2xl shadow-lg space-y-4">
+          <div className="bg-gradient-to-tr from-emerald-50 via-teal-50/30 to-emerald-50 border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4">
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-emerald-700 font-bold text-sm uppercase tracking-wider">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
                 </svg>
                 <span>Department Analytics</span>
               </div>
-              <p className="text-xs text-slate-350 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Review overall department publications statistics, training certificate aggregates, and student appraisal rating profiles.
               </p>
             </div>
             <Link
               to="/hod/analytics"
-              className="block w-full text-center py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 hover:border-emerald-500/35 rounded-xl text-xs font-bold transition"
+              className="block w-full text-center py-2.5 bg-emerald-100/50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 hover:border-emerald-300 rounded-xl text-xs font-bold transition"
             >
               Analyze Department Metrics
             </Link>
           </div>
 
           {/* Quick Roster Links */}
-          <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg space-y-4">
-            <h4 className="font-bold text-sm text-white">Academic Roster</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+          <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4">
+            <h4 className="font-bold text-sm text-slate-850">Academic Roster</h4>
+            <p className="text-xs text-slate-500 leading-relaxed">
               View designations, current evaluation tracks, and publication points for all instructors in your department.
             </p>
             <Link to="/hod/faculty" className="text-xs font-bold text-emerald-450 hover:text-emerald-400 flex items-center gap-1 transition">

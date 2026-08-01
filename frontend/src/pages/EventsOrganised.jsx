@@ -151,8 +151,8 @@ export const EventsOrganised = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white">Events Organised</h1>
-          <p className="text-sm text-slate-400">Log workshops, seminars, and conferences coordinated by you.</p>
+          <h1 className="text-2xl font-black text-slate-850">Events Organised</h1>
+          <p className="text-sm text-slate-500">Log workshops, seminars, and conferences coordinated by you.</p>
         </div>
         <button
           onClick={handleOpenAdd}
@@ -189,23 +189,23 @@ export const EventsOrganised = () => {
 
       {/* Events List */}
       {events.length === 0 ? (
-        <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-12 text-center space-y-4">
-          <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-655">
+        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center space-y-4">
+          <div className="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center mx-auto text-slate-655">
             <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
           <div className="max-w-sm mx-auto space-y-1">
-            <h3 className="text-white font-bold">No events logged</h3>
-            <p className="text-slate-400 text-xs leading-relaxed">Add details of workshops or conferences organized under your guidance to update your academic activity score.</p>
+            <h3 className="text-slate-850 font-bold">No events logged</h3>
+            <p className="text-slate-500 text-xs leading-relaxed">Add details of workshops or conferences organized under your guidance to update your academic activity score.</p>
           </div>
         </div>
       ) : (
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white border border-slate-200 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-400 text-xxs font-bold uppercase tracking-wider">
+                <tr className="bg-slate-50/60 border-b border-slate-200 text-slate-500 text-xxs font-bold uppercase tracking-wider">
                   <th className="px-6 py-4">Event Title</th>
                   <th className="px-6 py-4">Type</th>
                   <th className="px-6 py-4">Role</th>
@@ -214,31 +214,31 @@ export const EventsOrganised = () => {
                   <th className="px-6 py-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50 text-sm text-slate-350">
+              <tbody className="divide-y divide-slate-800/50 text-sm text-slate-650">
                 {events.map((event) => (
-                  <tr key={event._id} className="hover:bg-slate-950/30 transition">
+                  <tr key={event._id} className="hover:bg-slate-50/30 transition">
                     <td className="px-6 py-4 font-semibold text-white max-w-xs truncate">{event.title}</td>
                     <td className="px-6 py-4 text-xs">
                       <span className="px-2 py-0.5 rounded bg-violet-500/10 border border-violet-500/25 text-violet-400 font-bold uppercase text-[9px]">
                         {event.eventType}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-xs font-medium text-slate-300">{event.role}</td>
-                    <td className="px-6 py-4 text-xs text-slate-400">
+                    <td className="px-6 py-4 text-xs font-medium text-slate-650">{event.role}</td>
+                    <td className="px-6 py-4 text-xs text-slate-500">
                       {new Date(event.startDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} -{' '}
                       {new Date(event.endDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </td>
-                    <td className="px-6 py-4 text-xs text-slate-450 max-w-xxs truncate" title={event.description}>
+                    <td className="px-6 py-4 text-xs text-slate-500 max-w-xxs truncate" title={event.description}>
                       {event.description || 'No description'}
                     </td>
                     <td className="px-6 py-4 text-center">
                       <div className="flex items-center justify-center gap-3">
-                        <button onClick={() => handleOpenEdit(event)} className="p-1.5 rounded-lg border border-slate-800 hover:border-slate-700 hover:bg-slate-850 text-slate-400 hover:text-slate-200 transition">
+                        <button onClick={() => handleOpenEdit(event)} className="p-1.5 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                           </svg>
                         </button>
-                        <button onClick={() => handleDelete(event._id)} className="p-1.5 rounded-lg border border-slate-800 hover:border-rose-900/50 hover:bg-rose-950/20 text-slate-400 hover:text-rose-400 transition">
+                        <button onClick={() => handleDelete(event._id)} className="p-1.5 rounded-lg border border-slate-200 hover:border-rose-900/50 hover:bg-rose-950/20 text-slate-500 hover:text-rose-400 transition">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
@@ -255,16 +255,16 @@ export const EventsOrganised = () => {
 
       {/* Editor Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative">
+        <div className="fixed inset-0 bg-slate-50/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative">
             <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
 
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
-              <h3 className="font-bold text-white text-md">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-white">
+              <h3 className="font-bold text-slate-850 text-md">
                 {editingId ? 'Edit Event Details' : 'Add Event Details'}
               </h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white transition">
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -275,14 +275,14 @@ export const EventsOrganised = () => {
             <form onSubmit={handleSubmit} className="p-6 space-y-4 font-sans">
               {/* Event Title */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Event Title</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Event Title</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
                   placeholder="e.g. Workshop on Generative AI and Large Language Models"
-                  className={`w-full bg-slate-950 border text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
-                    formErrors.title ? 'border-rose-500/60' : 'border-slate-800'
+                  className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
+                    formErrors.title ? 'border-rose-500/60' : 'border-slate-200'
                   }`}
                 />
                 {formErrors.title && <p className="text-xxs text-rose-450 font-medium">{formErrors.title}</p>}
@@ -291,11 +291,11 @@ export const EventsOrganised = () => {
               {/* Grid: Type and Role */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Event Type</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Event Type</label>
                   <select
                     value={formData.eventType}
                     onChange={(e) => handleInputChange('eventType', e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm cursor-pointer"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm cursor-pointer"
                   >
                     {eventTypes.map((t) => (
                       <option key={t} value={t}>
@@ -306,11 +306,11 @@ export const EventsOrganised = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Your Role</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Your Role</label>
                   <select
                     value={formData.role}
                     onChange={(e) => handleInputChange('role', e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm cursor-pointer"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm cursor-pointer"
                   >
                     {roles.map((r) => (
                       <option key={r} value={r}>
@@ -324,26 +324,26 @@ export const EventsOrganised = () => {
               {/* Grid: Start and End Date */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Start Date</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Start Date</label>
                   <input
                     type="date"
                     value={formData.startDate}
                     onChange={(e) => handleInputChange('startDate', e.target.value)}
-                    className={`w-full bg-slate-950 border text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm text-slate-400 ${
-                      formErrors.startDate ? 'border-rose-500/60' : 'border-slate-800'
+                    className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm text-slate-500 ${
+                      formErrors.startDate ? 'border-rose-500/60' : 'border-slate-200'
                     }`}
                   />
                   {formErrors.startDate && <p className="text-xxs text-rose-455 font-medium">{formErrors.startDate}</p>}
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">End Date</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">End Date</label>
                   <input
                     type="date"
                     value={formData.endDate}
                     onChange={(e) => handleInputChange('endDate', e.target.value)}
-                    className={`w-full bg-slate-950 border text-slate-350 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm text-slate-400 ${
-                      formErrors.endDate ? 'border-rose-500/60' : 'border-slate-800'
+                    className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm text-slate-500 ${
+                      formErrors.endDate ? 'border-rose-500/60' : 'border-slate-200'
                     }`}
                   />
                   {formErrors.endDate && <p className="text-xxs text-rose-455 font-medium">{formErrors.endDate}</p>}
@@ -352,22 +352,22 @@ export const EventsOrganised = () => {
 
               {/* Description */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest text-slate-400">Event Description</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Event Description</label>
                 <textarea
                   rows={3}
                   value={formData.description}
                   onChange={(e) => handleInputChange('description', e.target.value)}
                   placeholder="Detail sponsorship funding, attendee counts, guest speakers, or key workshop outcomes..."
-                  className="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-none"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm resize-none"
                 ></textarea>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="py-2 px-5 bg-transparent hover:bg-slate-800 border border-slate-800 text-slate-450 text-xs font-semibold rounded-xl transition"
+                  className="py-2 px-5 bg-transparent hover:bg-slate-100 border border-slate-200 text-slate-500 text-xs font-semibold rounded-xl transition"
                 >
                   Cancel
                 </button>

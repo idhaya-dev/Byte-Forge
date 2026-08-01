@@ -60,7 +60,7 @@ export const StudentDashboard = () => {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-brand-500"></div>
-          <p className="text-sm text-slate-400">Assembling dashboard metrics...</p>
+          <p className="text-sm text-slate-500">Assembling dashboard metrics...</p>
         </div>
       </div>
     );
@@ -69,16 +69,16 @@ export const StudentDashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800/80 p-8 shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50/30 to-blue-50 border border-slate-200 p-8 shadow-xl">
         <div className="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-brand-600/10 to-transparent blur-2xl pointer-events-none"></div>
         <div className="relative z-10 space-y-2">
-          <div className="inline-block px-3 py-1 rounded-full text-xxs font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 border border-brand-500/20">
+          <div className="inline-block px-3 py-1 rounded-full text-xxs font-bold uppercase tracking-wider text-brand-500 bg-brand-500/10 border border-brand-500/20">
             Welcome back
           </div>
-          <h1 className="text-3xl font-black text-white">
+          <h1 className="text-3xl font-black text-slate-800">
             Hello, {user?.name || 'Student'}!
           </h1>
-          <p className="text-slate-400 max-w-xl text-sm leading-relaxed">
+          <p className="text-slate-655 text-slate-500 max-w-xl text-sm leading-relaxed">
             Your voice matters. Submit constructive feedback for your course instructors anonymously to help improve academic delivery in the {user?.department || 'University'} department.
           </p>
         </div>
@@ -96,12 +96,12 @@ export const StudentDashboard = () => {
       {/* Grid of Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Stat 1 */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 group-hover:h-full transition-all"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Reviews Completed</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.submittedCount}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.submittedCount}</h3>
             </div>
             <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -118,12 +118,12 @@ export const StudentDashboard = () => {
         </div>
 
         {/* Stat 2 */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-brand-500 group-hover:h-full transition-all"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Available Faculty</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.facultyCount}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.facultyCount}</h3>
             </div>
             <div className="p-3 bg-brand-500/10 rounded-xl text-brand-400">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -131,16 +131,16 @@ export const StudentDashboard = () => {
               </svg>
             </div>
           </div>
-          <p className="text-xxs text-slate-400 font-medium mt-4">Listed inside your department</p>
+          <p className="text-xxs text-slate-500 font-medium mt-4">Listed inside your department</p>
         </div>
 
         {/* Stat 3 */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-amber-500 group-hover:h-full transition-all"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Pending Submissions</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.pendingReviews}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.pendingReviews}</h3>
             </div>
             <div className="p-3 bg-amber-500/10 rounded-xl text-amber-400">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -152,12 +152,12 @@ export const StudentDashboard = () => {
         </div>
 
         {/* Stat 4 */}
-        <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500 group-hover:h-full transition-all"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Announcements</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.announcementCount}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.announcementCount}</h3>
             </div>
             <div className="p-3 bg-indigo-500/10 rounded-xl text-indigo-400">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,7 +165,7 @@ export const StudentDashboard = () => {
               </svg>
             </div>
           </div>
-          <p className="text-xxs text-slate-400 font-medium mt-4">Targeted to student portal</p>
+          <p className="text-xxs text-slate-500 font-medium mt-4">Targeted to student portal</p>
         </div>
       </div>
 
@@ -173,12 +173,12 @@ export const StudentDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Quick Actions */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg space-y-4">
-            <h3 className="text-lg font-bold text-white">Quick Tasks</h3>
+          <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4">
+            <h3 className="text-lg font-bold text-slate-850">Quick Tasks</h3>
             <div className="space-y-3">
               <Link
                 to="/student/feedback"
-                className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-950 hover:bg-brand-900/10 hover:border-brand-500/30 border border-slate-800 text-slate-300 hover:text-white transition group"
+                className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 hover:bg-brand-900/10 hover:border-brand-500/30 border border-slate-200 text-slate-650 hover:text-white transition group"
               >
                 <div className="p-2.5 bg-brand-500/10 rounded-lg text-brand-400 group-hover:scale-110 transition duration-200">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -193,9 +193,9 @@ export const StudentDashboard = () => {
 
               <Link
                 to="/student/history"
-                className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition group"
+                className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-650 hover:text-white transition group"
               >
-                <div className="p-2.5 bg-slate-800 rounded-lg text-slate-400 group-hover:scale-110 transition duration-200">
+                <div className="p-2.5 bg-slate-100 rounded-lg text-slate-500 group-hover:scale-110 transition duration-200">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -211,7 +211,7 @@ export const StudentDashboard = () => {
           <div className="bg-gradient-to-tr from-brand-950/40 to-slate-900 border border-brand-800/20 p-6 rounded-2xl shadow-lg relative overflow-hidden">
             <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-brand-500/10 rounded-full blur-xl"></div>
             <h4 className="font-bold text-sm text-brand-400 mb-1.5 uppercase tracking-wider">🔒 Anonymous Guarantee</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-500 leading-relaxed">
               Your feedback is divided into separate storage layers. The database logs *when* you submit feedback but holds the ratings & comments in a detached document. No email, name, or student ID is associated with the evaluations.
             </p>
           </div>
@@ -219,9 +219,9 @@ export const StudentDashboard = () => {
 
         {/* Right Column: Recent Announcements */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg space-y-6">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-white">Academic Announcements</h3>
+          <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg space-y-6">
+            <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-850">Academic Announcements</h3>
               <Link to="/student/announcements" className="text-xs font-semibold text-brand-400 hover:text-brand-300 transition flex items-center gap-1">
                 View All
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -240,20 +240,20 @@ export const StudentDashboard = () => {
             ) : (
               <div className="space-y-4">
                 {recentAnnouncements.map((ann) => (
-                  <div key={ann._id} className="p-4 bg-slate-950/80 border border-slate-800/80 rounded-xl hover:border-slate-700 transition">
+                  <div key={ann._id} className="p-4 bg-slate-50/80 border border-slate-200 rounded-xl hover:border-slate-300 transition">
                     <div className="flex justify-between items-start gap-4 mb-2">
-                      <h4 className="font-bold text-white text-sm hover:text-brand-400 transition cursor-pointer">{ann.title}</h4>
+                      <h4 className="font-bold text-slate-850 text-sm hover:text-brand-400 transition cursor-pointer">{ann.title}</h4>
                       <span className="text-xxs text-slate-500 whitespace-nowrap">
                         {new Date(ann.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-3">
+                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-3">
                       {ann.content}
                     </p>
-                    <div className="flex items-center gap-2 pt-2 border-t border-slate-900 text-xxs text-slate-500">
-                      <span className="font-medium text-slate-400">{ann.postedBy?.name || 'Administrator'}</span>
+                    <div className="flex items-center gap-2 pt-2 border-t border-slate-200 text-xxs text-slate-500">
+                      <span className="font-medium text-slate-500">{ann.postedBy?.name || 'Administrator'}</span>
                       <span>&bull;</span>
-                      <span className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 font-semibold text-slate-400 uppercase tracking-widest text-[9px]">{ann.postedBy?.role || 'Admin'}</span>
+                      <span className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-700 font-semibold text-slate-500 uppercase tracking-widest text-[9px]">{ann.postedBy?.role || 'Admin'}</span>
                     </div>
                   </div>
                 ))}

@@ -12,14 +12,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-        // Dev Auth Bypass: Retrieve mock session if present
-        const mockUserStr = localStorage.getItem('mock_user');
-        if (mockUserStr) {
-          setUser(JSON.parse(mockUserStr));
-          setLoading(false);
-          return;
-        }
-
         const response = await authService.getCurrentUser();
         if (response?.success && response?.user) {
           setUser(response.user);
@@ -35,34 +27,15 @@ export const AuthProvider = ({ children }) => {
     checkLoggedIn();
   }, []);
 
-  const login = async (email, password, defaultRole = 'Student') => {
+  const login = async (email, password) => {
     setLoading(true);
     setError(null);
     try {
-      // Dev Auth Bypass: Automatically determine role and create mock user
-      let role = defaultRole;
-      const lowerEmail = (email || '').toLowerCase();
-      
-      if (lowerEmail.includes('faculty')) {
-        role = 'Faculty';
-      } else if (lowerEmail.includes('hod')) {
-        role = 'HOD';
-      } else if (lowerEmail.includes('student')) {
-        role = 'Student';
+      const response = await authService.login(email, password);
+      if (response?.success && response?.user) {
+        setUser(response.user);
+        return response.user;
       }
-
-      const mockUser = {
-        _id: 'mock-user-id-12345',
-        name: `Demo ${role}`,
-        email: email || `${role.toLowerCase()}@university.edu`,
-        role: role,
-        department: 'Computer Science',
-        designation: role === 'Faculty' ? 'Professor' : undefined,
-      };
-
-      setUser(mockUser);
-      localStorage.setItem('mock_user', JSON.stringify(mockUser));
-      return mockUser;
     } catch (err) {
       setError(err.message || 'Login failed');
       throw err;
@@ -91,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setLoading(true);
     try {
-      localStorage.removeItem('mock_user');
+      await authService.logout();
       setUser(null);
     } catch (err) {
       console.error('Logout error:', err.message);

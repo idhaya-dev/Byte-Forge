@@ -146,8 +146,8 @@ export const ResearchPapers = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white">Research Papers</h1>
-          <p className="text-sm text-slate-400">Log and manage your journal publications and research works.</p>
+          <h1 className="text-2xl font-black text-slate-850">Research Papers</h1>
+          <p className="text-sm text-slate-500">Log and manage your journal publications and research works.</p>
         </div>
         <button
           onClick={handleOpenAdd}
@@ -184,23 +184,23 @@ export const ResearchPapers = () => {
 
       {/* Data Table */}
       {papers.length === 0 ? (
-        <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-12 text-center space-y-4">
-          <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-650">
+        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center space-y-4">
+          <div className="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center mx-auto text-slate-650">
             <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
           <div className="max-w-sm mx-auto space-y-1">
-            <h3 className="text-white font-bold">No research papers logged</h3>
-            <p className="text-slate-400 text-xs leading-relaxed">Add details of your published research works to update your academic performance KPIs.</p>
+            <h3 className="text-slate-850 font-bold">No research papers logged</h3>
+            <p className="text-slate-500 text-xs leading-relaxed">Add details of your published research works to update your academic performance KPIs.</p>
           </div>
         </div>
       ) : (
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white border border-slate-200 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-400 text-xxs font-bold uppercase tracking-wider">
+                <tr className="bg-slate-50/60 border-b border-slate-200 text-slate-500 text-xxs font-bold uppercase tracking-wider">
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Journal</th>
                   <th className="px-6 py-4">Year</th>
@@ -209,9 +209,9 @@ export const ResearchPapers = () => {
                   <th className="px-6 py-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50 text-sm text-slate-350">
+              <tbody className="divide-y divide-slate-800/50 text-sm text-slate-650">
                 {papers.map((paper) => (
-                  <tr key={paper._id} className="hover:bg-slate-950/30 transition">
+                  <tr key={paper._id} className="hover:bg-slate-50/30 transition">
                     <td className="px-6 py-4 font-semibold text-white max-w-xs truncate">
                       {paper.url ? (
                         <a href={paper.url} target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 underline transition">
@@ -221,20 +221,20 @@ export const ResearchPapers = () => {
                         paper.title
                       )}
                     </td>
-                    <td className="px-6 py-4 text-slate-400 text-xs">{paper.journal}</td>
+                    <td className="px-6 py-4 text-slate-500 text-xs">{paper.journal}</td>
                     <td className="px-6 py-4 text-xs">{paper.publicationYear}</td>
                     <td className="px-6 py-4 text-xs font-semibold">{paper.citationCount}</td>
-                    <td className="px-6 py-4 text-xs text-slate-450 truncate max-w-[120px]" title={paper.doi}>
+                    <td className="px-6 py-4 text-xs text-slate-500 truncate max-w-[120px]" title={paper.doi}>
                       {paper.doi || 'N/A'}
                     </td>
                     <td className="px-6 py-4 text-center">
                       <div className="flex items-center justify-center gap-3">
-                        <button onClick={() => handleOpenEdit(paper)} className="p-1.5 rounded-lg border border-slate-800 hover:border-slate-700 hover:bg-slate-850 text-slate-400 hover:text-slate-200 transition">
+                        <button onClick={() => handleOpenEdit(paper)} className="p-1.5 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                           </svg>
                         </button>
-                        <button onClick={() => handleDelete(paper._id)} className="p-1.5 rounded-lg border border-slate-800 hover:border-rose-900/50 hover:bg-rose-950/20 text-slate-400 hover:text-rose-400 transition">
+                        <button onClick={() => handleDelete(paper._id)} className="p-1.5 rounded-lg border border-slate-200 hover:border-rose-900/50 hover:bg-rose-950/20 text-slate-500 hover:text-rose-400 transition">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
@@ -251,16 +251,16 @@ export const ResearchPapers = () => {
 
       {/* Editor Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative">
+        <div className="fixed inset-0 bg-slate-50/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative">
             <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
 
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
-              <h3 className="font-bold text-white text-md">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-white">
+              <h3 className="font-bold text-slate-850 text-md">
                 {editingId ? 'Edit Research Paper' : 'Add Research Paper'}
               </h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white transition">
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -271,14 +271,14 @@ export const ResearchPapers = () => {
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {/* Paper Title */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest text-slate-400">Paper Title</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Paper Title</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
                   placeholder="e.g. A Deep Learning Approach to Stock Market Prediction"
-                  className={`w-full bg-slate-950 border text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
-                    formErrors.title ? 'border-rose-500/60' : 'border-slate-800'
+                  className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
+                    formErrors.title ? 'border-rose-500/60' : 'border-slate-200'
                   }`}
                 />
                 {formErrors.title && <p className="text-xxs text-rose-400 font-medium">{formErrors.title}</p>}
@@ -286,14 +286,14 @@ export const ResearchPapers = () => {
 
               {/* Journal */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest text-slate-400">Journal Name</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Journal Name</label>
                 <input
                   type="text"
                   value={formData.journal}
                   onChange={(e) => handleInputChange('journal', e.target.value)}
                   placeholder="e.g. IEEE Transactions on Neural Networks"
-                  className={`w-full bg-slate-950 border text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
-                    formErrors.journal ? 'border-rose-500/60' : 'border-slate-800'
+                  className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
+                    formErrors.journal ? 'border-rose-500/60' : 'border-slate-200'
                   }`}
                 />
                 {formErrors.journal && <p className="text-xxs text-rose-400 font-medium">{formErrors.journal}</p>}
@@ -302,59 +302,59 @@ export const ResearchPapers = () => {
               {/* Grid: Year and Citation Count */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest text-slate-400">Publication Year</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Publication Year</label>
                   <input
                     type="number"
                     value={formData.publicationYear}
                     onChange={(e) => handleInputChange('publicationYear', e.target.value)}
-                    className={`w-full bg-slate-950 border text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
-                      formErrors.publicationYear ? 'border-rose-500/60' : 'border-slate-800'
+                    className={`w-full bg-slate-50 border text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm ${
+                      formErrors.publicationYear ? 'border-rose-500/60' : 'border-slate-200'
                     }`}
                   />
                   {formErrors.publicationYear && <p className="text-xxs text-rose-400 font-medium">{formErrors.publicationYear}</p>}
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest text-slate-400">Citation Count</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Citation Count</label>
                   <input
                     type="number"
                     value={formData.citationCount}
                     onChange={(e) => handleInputChange('citationCount', Number(e.target.value))}
-                    className="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
                   />
                 </div>
               </div>
 
               {/* DOI */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest text-slate-400">DOI (Digital Object Identifier)</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">DOI (Digital Object Identifier)</label>
                 <input
                   type="text"
                   value={formData.doi}
                   onChange={(e) => handleInputChange('doi', e.target.value)}
                   placeholder="e.g. 10.1109/TNNLS.2026.12345"
-                  className="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
                 />
               </div>
 
               {/* Paper Link */}
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest text-slate-400">Publication URL</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest text-slate-500">Publication URL</label>
                 <input
                   type="url"
                   value={formData.url}
                   onChange={(e) => handleInputChange('url', e.target.value)}
                   placeholder="e.g. https://ieeexplore.ieee.org/document/..."
-                  className="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-650 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/80 transition text-sm"
                 />
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="py-2 px-5 bg-transparent hover:bg-slate-800 border border-slate-800 text-slate-450 text-xs font-semibold rounded-xl transition"
+                  className="py-2 px-5 bg-transparent hover:bg-slate-100 border border-slate-200 text-slate-500 text-xs font-semibold rounded-xl transition"
                 >
                   Cancel
                 </button>

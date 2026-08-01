@@ -114,33 +114,30 @@ export const StudentRegister = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden font-sans">
-      {/* Decorative Blur Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 relative overflow-hidden font-sans">
+      {/* Decorative Orbs */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-slate-100 rounded-full blur-3xl -z-10"></div>
 
       {/* Main Container */}
       <div className="w-full max-w-lg">
         {/* Logo Section */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-500 text-white font-black text-xl shadow-xl shadow-brand-500/20 mb-3">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white font-black text-xl shadow-lg mb-3">
             360
           </div>
-          <h1 className="text-2xl font-black tracking-tight text-white mb-1 bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text">
-            Faculty360°
+          <h1 className="text-2xl font-black tracking-tight text-slate-800 mb-1">
+            Academic 360°
           </h1>
-          <p className="text-xs font-semibold tracking-wider text-brand-400 uppercase">
+          <p className="text-xs font-semibold tracking-wider text-blue-600 uppercase">
             Create Student Account
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-6 md:p-8 shadow-2xl relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl pointer-events-none"></div>
-
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-xl">
           {error && (
-            <div className="mb-5 p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm flex gap-2 items-start">
-              <svg className="w-5 h-5 shrink-0 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="mb-5 p-4 rounded-xl bg-rose-50 border border-rose-100 text-rose-605 text-rose-600 text-sm flex gap-2 items-start">
+              <svg className="w-5 h-5 shrink-0 text-rose-550" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
               <span>{error}</span>
@@ -148,8 +145,8 @@ export const StudentRegister = () => {
           )}
 
           {successMsg && (
-            <div className="mb-5 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm flex gap-2 items-center">
-              <svg className="w-5 h-5 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="mb-5 p-4 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 text-sm flex gap-2 items-center">
+              <svg className="w-5 h-5 shrink-0 text-emerald-550" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>{successMsg}</span>
@@ -160,7 +157,7 @@ export const StudentRegister = () => {
             {/* Grid 1: Name and Register Number */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 text-slate-400">
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
                   Full Name
                 </label>
                 <input
@@ -169,17 +166,17 @@ export const StudentRegister = () => {
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   placeholder="e.g. John Doe"
                   className={`
-                    w-full px-3 py-2 bg-slate-950/80 border rounded-xl text-white placeholder-slate-650 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm
-                    ${fieldErrors.name ? 'border-rose-500/60 ring-1 ring-rose-500/10' : 'border-slate-800 hover:border-slate-700'}
+                    w-full px-3 py-2 bg-white border rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm
+                    ${fieldErrors.name ? 'border-rose-450 ring-1 ring-rose-500/10' : 'border-slate-200 hover:border-slate-350'}
                   `}
                 />
                 {fieldErrors.name && (
-                  <p className="mt-1 text-[11px] text-rose-450 text-rose-450 font-medium">{fieldErrors.name}</p>
+                  <p className="mt-1 text-[11px] text-rose-500 font-medium">{fieldErrors.name}</p>
                 )}
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 text-slate-400">
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
                   Register Number
                 </label>
                 <input
@@ -188,12 +185,12 @@ export const StudentRegister = () => {
                   onChange={(e) => handleInputChange('registerNumber', e.target.value)}
                   placeholder="e.g. CS2026004"
                   className={`
-                    w-full px-3 py-2 bg-slate-950/80 border rounded-xl text-white placeholder-slate-650 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm
-                    ${fieldErrors.registerNumber ? 'border-rose-500/60 ring-1 ring-rose-500/10' : 'border-slate-800 hover:border-slate-700'}
+                    w-full px-3 py-2 bg-white border rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm
+                    ${fieldErrors.registerNumber ? 'border-rose-450 ring-1 ring-rose-500/10' : 'border-slate-200 hover:border-slate-350'}
                   `}
                 />
                 {fieldErrors.registerNumber && (
-                  <p className="mt-1 text-[11px] text-rose-450 text-rose-450 font-medium">{fieldErrors.registerNumber}</p>
+                  <p className="mt-1 text-[11px] text-rose-500 font-medium">{fieldErrors.registerNumber}</p>
                 )}
               </div>
             </div>
@@ -201,15 +198,15 @@ export const StudentRegister = () => {
             {/* Grid 2: Department and Year */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 text-slate-400">
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
                   Department
                 </label>
                 <select
                   value={formData.department}
                   onChange={(e) => handleInputChange('department', e.target.value)}
                   className={`
-                    w-full px-3 py-2.5 bg-slate-950/80 border rounded-xl text-slate-350 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm cursor-pointer text-slate-300
-                    ${fieldErrors.department ? 'border-rose-500/60' : 'border-slate-800 hover:border-slate-700'}
+                    w-full px-3 py-2.5 bg-white border rounded-xl text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm cursor-pointer
+                    ${fieldErrors.department ? 'border-rose-450' : 'border-slate-200 hover:border-slate-350'}
                   `}
                 >
                   <option value="">Select Department</option>
@@ -220,20 +217,20 @@ export const StudentRegister = () => {
                   ))}
                 </select>
                 {fieldErrors.department && (
-                  <p className="mt-1 text-[11px] text-rose-450 text-rose-450 font-medium">{fieldErrors.department}</p>
+                  <p className="mt-1 text-[11px] text-rose-500 font-medium">{fieldErrors.department}</p>
                 )}
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 text-slate-400">
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
                   Year
                 </label>
                 <select
                   value={formData.year}
                   onChange={(e) => handleInputChange('year', e.target.value)}
                   className={`
-                    w-full px-3 py-2.5 bg-slate-950/80 border rounded-xl text-slate-350 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm cursor-pointer text-slate-300
-                    ${fieldErrors.year ? 'border-rose-500/60' : 'border-slate-800 hover:border-slate-700'}
+                    w-full px-3 py-2.5 bg-white border rounded-xl text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm cursor-pointer
+                    ${fieldErrors.year ? 'border-rose-450' : 'border-slate-200 hover:border-slate-350'}
                   `}
                 >
                   <option value="">Select Year</option>
@@ -244,14 +241,14 @@ export const StudentRegister = () => {
                   ))}
                 </select>
                 {fieldErrors.year && (
-                  <p className="mt-1 text-[11px] text-rose-450 text-rose-450 font-medium">{fieldErrors.year}</p>
+                  <p className="mt-1 text-[11px] text-rose-500 font-medium">{fieldErrors.year}</p>
                 )}
               </div>
             </div>
 
             {/* Email (Full Width) */}
             <div>
-              <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 text-slate-400">
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
                 Email Address
               </label>
               <input
@@ -260,19 +257,19 @@ export const StudentRegister = () => {
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 placeholder="student@university.edu"
                 className={`
-                  w-full px-3 py-2 bg-slate-950/80 border rounded-xl text-white placeholder-slate-650 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm
-                  ${fieldErrors.email ? 'border-rose-500/60 ring-1 ring-rose-500/10' : 'border-slate-800 hover:border-slate-700'}
+                  w-full px-3 py-2 bg-white border rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm
+                  ${fieldErrors.email ? 'border-rose-450 ring-1 ring-rose-500/10' : 'border-slate-200 hover:border-slate-350'}
                 `}
               />
               {fieldErrors.email && (
-                <p className="mt-1 text-[11px] text-rose-450 text-rose-450 font-medium">{fieldErrors.email}</p>
+                <p className="mt-1 text-[11px] text-rose-500 font-medium">{fieldErrors.email}</p>
               )}
             </div>
 
             {/* Grid 3: Password and Confirm Password */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 text-slate-400">
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
                   Password
                 </label>
                 <input
@@ -281,17 +278,17 @@ export const StudentRegister = () => {
                   onChange={(e) => handleInputChange('password', e.target.value)}
                   placeholder="••••••••"
                   className={`
-                    w-full px-3 py-2 bg-slate-950/80 border rounded-xl text-white placeholder-slate-650 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm
-                    ${fieldErrors.password ? 'border-rose-500/60 ring-1 ring-rose-500/10' : 'border-slate-800 hover:border-slate-700'}
+                    w-full px-3 py-2 bg-white border rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm
+                    ${fieldErrors.password ? 'border-rose-450 ring-1 ring-rose-500/10' : 'border-slate-200 hover:border-slate-350'}
                   `}
                 />
                 {fieldErrors.password && (
-                  <p className="mt-1 text-[11px] text-rose-450 text-rose-450 font-medium">{fieldErrors.password}</p>
+                  <p className="mt-1 text-[11px] text-rose-500 font-medium">{fieldErrors.password}</p>
                 )}
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 text-slate-400">
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
                   Confirm Password
                 </label>
                 <input
@@ -300,12 +297,12 @@ export const StudentRegister = () => {
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                   placeholder="••••••••"
                   className={`
-                    w-full px-3 py-2 bg-slate-950/80 border rounded-xl text-white placeholder-slate-650 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/80 transition text-sm
-                    ${fieldErrors.confirmPassword ? 'border-rose-500/60 ring-1 ring-rose-500/10' : 'border-slate-800 hover:border-slate-700'}
+                    w-full px-3 py-2 bg-white border rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm
+                    ${fieldErrors.confirmPassword ? 'border-rose-450 ring-1 ring-rose-500/10' : 'border-slate-200 hover:border-slate-350'}
                   `}
                 />
                 {fieldErrors.confirmPassword && (
-                  <p className="mt-1 text-[11px] text-rose-450 text-rose-450 font-medium">{fieldErrors.confirmPassword}</p>
+                  <p className="mt-1 text-[11px] text-rose-500 font-medium">{fieldErrors.confirmPassword}</p>
                 )}
               </div>
             </div>
@@ -314,7 +311,7 @@ export const StudentRegister = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-4 py-2.5 px-4 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-brand-500/20 active:translate-y-px transition flex justify-center items-center gap-2 text-sm"
+              className="w-full mt-4 py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg active:translate-y-px transition flex justify-center items-center gap-2 text-sm"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -332,15 +329,15 @@ export const StudentRegister = () => {
           {/* Redirection Link */}
           <div className="mt-6 text-center text-xs">
             <span className="text-slate-500">Already have an account? </span>
-            <Link to="/login" className="font-semibold text-brand-400 hover:text-brand-300 transition">
+            <Link to="/login" className="font-semibold text-blue-600 hover:underline transition">
               Sign In
             </Link>
           </div>
         </div>
 
         {/* Security Notice */}
-        <div className="mt-6 text-center text-xxs text-slate-500">
-          <p>Registration credentials are secure. Faculty360° uses industry standard SHA-256 password hashing logic.</p>
+        <div className="mt-6 text-center text-xxs text-slate-400">
+          <p>Registration credentials are secure. Academic 360° uses industry standard SHA-256 password hashing logic.</p>
         </div>
       </div>
     </div>

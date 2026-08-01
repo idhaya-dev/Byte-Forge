@@ -108,8 +108,8 @@ export const FacultyKPI = () => {
     <div className="space-y-8 font-sans max-w-5xl mx-auto">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black text-white">KPI Targets Dashboard</h1>
-        <p className="text-sm text-slate-400">Renders real-time appraisal metric standings and progress weights on the 100-point performance scale.</p>
+        <h1 className="text-2xl font-black text-slate-850">KPI Targets Dashboard</h1>
+        <p className="text-sm text-slate-500">Renders real-time appraisal metric standings and progress weights on the 100-point performance scale.</p>
       </div>
 
       {error && (
@@ -119,10 +119,10 @@ export const FacultyKPI = () => {
       )}
 
       {/* Total score summary indicator */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-violet-955/20 to-slate-900 border border-slate-800/80 p-8 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-violet-955/20 to-slate-900 border border-slate-200 p-8 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-lg font-bold text-white">Cumulative KPI Score</h3>
-          <p className="text-xs text-slate-400 max-w-md leading-relaxed">
+          <h3 className="text-lg font-bold text-slate-850">Cumulative KPI Score</h3>
+          <p className="text-xs text-slate-500 max-w-md leading-relaxed">
             Your cumulative KPI Score shows your achievements across research, upskilling, and teaching parameters. Check individual sections below to target missing weights.
           </p>
         </div>
@@ -135,7 +135,7 @@ export const FacultyKPI = () => {
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Points Secured</span>
           </div>
-          <div className="h-12 w-px bg-slate-800"></div>
+          <div className="h-12 w-px bg-slate-100"></div>
           <div className="text-center">
             <span className="block text-4xl font-extrabold text-slate-500">100</span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Max Target</span>
@@ -148,17 +148,17 @@ export const FacultyKPI = () => {
         {kpiCategories.map((cat) => {
           const percent = (cat.score / cat.max) * 100;
           return (
-            <div key={cat.name} className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-lg space-y-4 hover:border-slate-700 transition">
+            <div key={cat.name} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-lg space-y-4 hover:border-slate-300 transition">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <div>
-                  <h4 className="font-bold text-white text-md">{cat.name}</h4>
+                  <h4 className="font-bold text-slate-850 text-md">{cat.name}</h4>
                   <p className="text-xxs text-slate-500 mt-0.5">{cat.description}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-xxs font-semibold bg-slate-850 px-2 py-0.5 rounded border border-slate-800 text-slate-400">
+                  <span className="text-xxs font-semibold bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-slate-500">
                     Logged: {cat.count} {cat.unit}
                   </span>
-                  <span className="text-xs font-extrabold text-white">
+                  <span className="text-xs font-extrabold text-slate-800">
                     {cat.score} / {cat.max} pts
                   </span>
                 </div>
@@ -166,7 +166,7 @@ export const FacultyKPI = () => {
 
               {/* Progress bar */}
               <div className="space-y-1.5">
-                <div className="w-full h-2.5 bg-slate-950 border border-slate-850 rounded-full overflow-hidden">
+                <div className="w-full h-2.5 bg-slate-50 border border-slate-200 rounded-full overflow-hidden">
                   <div
                     className={`h-full ${cat.color} transition-all duration-500 rounded-full`}
                     style={{ width: `${percent}%` }}

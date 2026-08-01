@@ -64,7 +64,7 @@ export const FacultyDashboard = () => {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-violet-500"></div>
-          <p className="text-sm text-slate-400">Loading appraisal metrics...</p>
+          <p className="text-sm text-slate-500">Loading appraisal metrics...</p>
         </div>
       </div>
     );
@@ -73,16 +73,16 @@ export const FacultyDashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in font-sans">
       {/* Welcome Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-violet-950/40 to-slate-900 border border-slate-800/80 p-8 shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-violet-50 via-fuchsia-50/30 to-violet-50 border border-slate-200 p-8 shadow-xl">
         <div className="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-violet-600/10 to-transparent blur-2xl pointer-events-none"></div>
         <div className="relative z-10 space-y-2">
-          <div className="inline-block px-3 py-1 rounded-full text-xxs font-bold uppercase tracking-wider text-violet-400 bg-violet-500/10 border border-violet-500/20">
+          <div className="inline-block px-3 py-1 rounded-full text-xxs font-bold uppercase tracking-wider text-violet-600 bg-violet-500/10 border border-violet-500/20">
             Instructor Workstation
           </div>
-          <h1 className="text-3xl font-black text-white">
+          <h1 className="text-3xl font-black text-slate-800">
             Welcome, {user?.name || 'Faculty Member'}
           </h1>
-          <p className="text-slate-400 max-w-xl text-sm leading-relaxed">
+          <p className="text-slate-500 max-w-xl text-sm leading-relaxed">
             Manage your academic profile, log publications, update training certificates, track organized events, and submit your annual self appraisal form.
           </p>
         </div>
@@ -100,12 +100,12 @@ export const FacultyDashboard = () => {
       {/* Grid of Counts */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Research Papers */}
-        <Link to="/faculty/papers" className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-violet-500/50 hover:bg-slate-900 transition-all duration-200">
+        <Link to="/faculty/papers" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-violet-500/50 hover:bg-white transition-all duration-200">
           <div className="absolute top-0 left-0 w-1 h-full bg-violet-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Research Papers</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.papers}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.papers}</h3>
             </div>
             <div className="p-2.5 bg-violet-500/10 rounded-xl text-violet-400 group-hover:scale-105 transition">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,12 +117,12 @@ export const FacultyDashboard = () => {
         </Link>
 
         {/* Books Published */}
-        <Link to="/faculty/books" className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-fuchsia-500/50 hover:bg-slate-900 transition-all duration-200">
+        <Link to="/faculty/books" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-fuchsia-500/50 hover:bg-white transition-all duration-200">
           <div className="absolute top-0 left-0 w-1 h-full bg-fuchsia-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Books Published</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.books}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.books}</h3>
             </div>
             <div className="p-2.5 bg-fuchsia-500/10 rounded-xl text-fuchsia-400 group-hover:scale-105 transition">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -134,12 +134,12 @@ export const FacultyDashboard = () => {
         </Link>
 
         {/* Certificates */}
-        <Link to="/faculty/certificates" className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-emerald-500/50 hover:bg-slate-900 transition-all duration-200">
+        <Link to="/faculty/certificates" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-emerald-500/50 hover:bg-white transition-all duration-200">
           <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Certifications</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.certificates}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.certificates}</h3>
             </div>
             <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400 group-hover:scale-105 transition">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -151,12 +151,12 @@ export const FacultyDashboard = () => {
         </Link>
 
         {/* Events Organised */}
-        <Link to="/faculty/events" className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-amber-500/50 hover:bg-slate-900 transition-all duration-200">
+        <Link to="/faculty/events" className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group hover:border-amber-500/50 hover:bg-white transition-all duration-200">
           <div className="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Events Organised</p>
-              <h3 className="text-3xl font-extrabold text-white">{stats.events}</h3>
+              <h3 className="text-3xl font-extrabold text-slate-850">{stats.events}</h3>
             </div>
             <div className="p-2.5 bg-amber-500/10 rounded-xl text-amber-400 group-hover:scale-105 transition">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -171,34 +171,34 @@ export const FacultyDashboard = () => {
       {/* Main Grid: Self Appraisal Status & Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Appraisal Card */}
-        <div className="lg:col-span-2 bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg flex flex-col justify-between relative overflow-hidden">
+        <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-lg flex flex-col justify-between relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-white">Annual Self Appraisal</h3>
+            <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-850">Annual Self Appraisal</h3>
               <span className={`text-xxs font-bold px-2 py-0.5 rounded border ${
                 appraisalInfo.submitted
                   ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                   : appraisalInfo.status === 'Draft'
                   ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                  : 'bg-slate-800 text-slate-400 border-slate-700'
+                  : 'bg-slate-100 text-slate-500 border-slate-700'
               }`}>
                 {appraisalInfo.status}
               </span>
             </div>
 
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-sm text-slate-650 leading-relaxed">
               Your self appraisal forms the core baseline of the 360-degree performance scoring system. Once submitted, your scores are evaluated alongside HOD assessments, student feedback, and peer reviews.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 text-xs bg-slate-950/40 p-4 border border-slate-850/40 rounded-xl">
+            <div className="grid grid-cols-2 gap-4 text-xs bg-slate-50/40 p-4 border border-slate-200/40 rounded-xl">
               <div>
                 <span className="text-slate-500 block text-xxs font-bold uppercase">Academic Session</span>
-                <span className="text-white font-medium">{appraisalInfo.academicYear}</span>
+                <span className="text-slate-800 font-medium">{appraisalInfo.academicYear}</span>
               </div>
               <div>
                 <span className="text-slate-500 block text-xxs font-bold uppercase">Self Evaluation Status</span>
-                <span className="text-white font-medium">
+                <span className="text-slate-800 font-medium">
                   {appraisalInfo.submitted ? `Submitted (Rating: ${stats.selfRating || '5'}/5)` : 'Draft Pending Submission'}
                 </span>
               </div>
@@ -211,7 +211,7 @@ export const FacultyDashboard = () => {
               className={`
                 py-2.5 px-6 rounded-xl font-bold text-xs shadow-md transition active:translate-y-px duration-150
                 ${appraisalInfo.submitted
-                  ? 'bg-slate-800 hover:bg-slate-750 text-slate-350 border border-slate-700'
+                  ? 'bg-slate-100 hover:bg-slate-750 text-slate-650 border border-slate-700'
                   : 'bg-violet-600 hover:bg-violet-500 text-white shadow-violet-600/15'
                 }
               `}
@@ -224,30 +224,30 @@ export const FacultyDashboard = () => {
         {/* Quick Insights Cards */}
         <div className="lg:col-span-1 space-y-6">
           {/* AI Insights Quick Card */}
-          <div className="bg-gradient-to-tr from-slate-900 to-violet-950/20 border border-violet-900/30 p-6 rounded-2xl shadow-lg space-y-4 flex flex-col justify-between">
+          <div className="bg-gradient-to-tr from-violet-50 via-fuchsia-50/30 to-violet-50 border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4 flex flex-col justify-between">
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-violet-400 font-bold text-sm uppercase tracking-wider">
-                <svg className="w-5 h-5 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="flex items-center gap-2 text-violet-750 font-bold text-sm uppercase tracking-wider text-violet-700">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
                 <span>AI Core Insights</span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Unlock diagnostic suggestions regarding research metrics, training credentials, and teaching pedagogy based on your active scores.
               </p>
             </div>
             <Link
               to="/faculty/insights"
-              className="w-full text-center py-2.5 bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 border border-violet-500/20 hover:border-violet-500/35 rounded-xl text-xs font-bold transition"
+              className="w-full text-center py-2.5 bg-violet-100/50 hover:bg-violet-100 text-violet-700 border border-violet-200 hover:border-violet-300 rounded-xl text-xs font-bold transition"
             >
               Analyze Profile Performance
             </Link>
           </div>
 
           {/* KPI Dashboard Quick Link */}
-          <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl shadow-lg space-y-3">
-            <h4 className="font-bold text-sm text-white">KPI Targets Progress</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+          <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg space-y-3">
+            <h4 className="font-bold text-sm text-slate-850">KPI Targets Progress</h4>
+            <p className="text-xs text-slate-500 leading-relaxed">
               Track progress points towards the 100-point performance scale. Keep publication indexes and event logs updated.
             </p>
             <Link to="/faculty/kpi" className="text-xs font-semibold text-violet-400 hover:text-violet-300 flex items-center gap-1 transition">
