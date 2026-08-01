@@ -15,24 +15,6 @@ export const Login = () => {
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
 
-  const DEMO_CREDENTIALS = {
-    Student: { email: 'student@university.edu', password: 'password123' },
-    Faculty: { email: 'faculty@university.edu', password: 'password123' },
-    HOD: { email: 'hod@university.edu', password: 'password123' },
-  };
-
-  const handleFillDemo = (role = activeRole) => {
-    const creds = DEMO_CREDENTIALS[role];
-    if (creds) {
-      setEmail(creds.email);
-      setPassword(creds.password);
-      setError('');
-      setFieldErrors({});
-    }
-  };
-
-
-
   const validate = () => {
     const errors = {};
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
@@ -164,17 +146,7 @@ export const Login = () => {
             })}
           </div>
 
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-bold text-slate-800">Sign In to Workspace</h2>
-            <button
-              type="button"
-              onClick={() => handleFillDemo()}
-              className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200 transition"
-              title="Auto-fill default demo login details"
-            >
-              ⚡ Auto-Fill Demo
-            </button>
-          </div>
+          <h2 className="text-lg font-bold text-slate-800 mb-5">Sign In to Workspace</h2>
 
           {error && (
             <div className="mb-5 p-4 rounded-xl bg-rose-50 border border-rose-100 text-rose-600 text-sm flex gap-2.5 items-start">
@@ -276,36 +248,6 @@ export const Login = () => {
               </Link>
             </div>
           )}
-        </div>
-
-        {/* Demo Credentials Reference Box */}
-        <div className="mt-6 bg-white border border-slate-200 rounded-2xl p-4 shadow-md">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
-            🔑 System Demo Credentials
-          </p>
-          <div className="space-y-2 text-xs">
-            <div className="flex items-center justify-between p-2 rounded-lg bg-blue-50/60 border border-blue-100">
-              <div>
-                <span className="font-bold text-blue-700 block">Student Portal</span>
-                <span className="text-slate-600">student@university.edu</span>
-              </div>
-              <span className="font-mono text-slate-500 bg-white px-2 py-0.5 rounded border text-xxs">password123</span>
-            </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-violet-50/60 border border-violet-100">
-              <div>
-                <span className="font-bold text-violet-700 block">Faculty Portal</span>
-                <span className="text-slate-600">faculty@university.edu</span>
-              </div>
-              <span className="font-mono text-slate-500 bg-white px-2 py-0.5 rounded border text-xxs">password123</span>
-            </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-emerald-50/60 border border-emerald-100">
-              <div>
-                <span className="font-bold text-emerald-700 block">HOD Portal</span>
-                <span className="text-slate-600">hod@university.edu</span>
-              </div>
-              <span className="font-mono text-slate-500 bg-white px-2 py-0.5 rounded border text-xxs">password123</span>
-            </div>
-          </div>
         </div>
 
         {/* Technical Notice */}
