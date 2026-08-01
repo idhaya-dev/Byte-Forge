@@ -88,7 +88,7 @@ export const HodDashboard = () => {
       )}
 
       {/* Analytics Counts Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {/* Total Faculty */}
         <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
@@ -139,29 +139,12 @@ export const HodDashboard = () => {
           </div>
           <p className="text-xxs text-slate-500 mt-4">Overall scores finalized</p>
         </div>
-
-        {/* Avg Overall Score */}
-        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg relative overflow-hidden group">
-          <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Avg Score (KPI)</p>
-              <h3 className="text-3xl font-extrabold text-slate-850">{analytics.avgOverallScore}%</h3>
-            </div>
-            <div className="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-            </div>
-          </div>
-          <p className="text-xxs text-slate-500 mt-4">Out of 100 points scale</p>
-        </div>
       </div>
 
       {/* Main Grid: Pending Appraisals & Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         {/* Pending Reviews Table */}
-        <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-lg flex flex-col justify-between overflow-hidden">
+        <div className="lg:col-span-3 bg-white border border-slate-200 p-6 rounded-2xl shadow-lg flex flex-col justify-between overflow-hidden">
           <div className="space-y-4">
             <div className="flex justify-between items-center pb-2 border-b border-slate-200">
               <h3 className="text-lg font-bold text-slate-850">Pending Appraisals Evaluation</h3>
@@ -216,7 +199,7 @@ export const HodDashboard = () => {
         </div>
 
         {/* Quick Utilities sidebar */}
-        <div className="lg:col-span-1 space-y-6">
+        <div className="lg:col-span-2 space-y-6">
           {/* Department Analytics Quick Card */}
           <div className="bg-gradient-to-tr from-emerald-50 via-teal-50/30 to-emerald-50 border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4">
             <div className="space-y-2">
@@ -235,20 +218,6 @@ export const HodDashboard = () => {
               className="block w-full text-center py-2.5 bg-emerald-100/50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 hover:border-emerald-300 rounded-xl text-xs font-bold transition"
             >
               Analyze Department Metrics
-            </Link>
-          </div>
-
-          {/* Quick Roster Links */}
-          <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg space-y-4">
-            <h4 className="font-bold text-sm text-slate-850">Academic Roster</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              View designations, current evaluation tracks, and publication points for all instructors in your department.
-            </p>
-            <Link to="/hod/faculty" className="text-xs font-bold text-emerald-450 hover:text-emerald-400 flex items-center gap-1 transition">
-              Manage Faculty Roster
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
             </Link>
           </div>
         </div>

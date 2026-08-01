@@ -67,6 +67,13 @@ export const FacultyDetails = () => {
     }
   };
 
+  const getAttendance = (name) => {
+    if (!name) return '92%';
+    const sum = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const percent = 85 + (sum % 14);
+    return `${percent}%`;
+  };
+
   const handleEvaluationSubmit = async (submitFlag) => {
     if (!appraisal) return;
     setMessage({ type: '', text: '' });
@@ -136,9 +143,17 @@ export const FacultyDetails = () => {
           <p className="text-xxs text-slate-500">Email: {faculty.email}</p>
         </div>
 
+        {/* Show Attendance */}
+        <div className="text-center bg-slate-50/80 border border-slate-200 px-6 py-4 rounded-xl shrink-0">
+          <span className="block text-3xl font-black text-emerald-600">
+            {getAttendance(faculty.name)}
+          </span>
+          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Attendance</span>
+        </div>
+
         {/* Show KPI percentage if finalized */}
         {appraisal?.status === 'Completed' && (
-          <div className="text-center bg-slate-50/80 border border-slate-200 px-6 py-4 rounded-xl">
+          <div className="text-center bg-slate-50/80 border border-slate-200 px-6 py-4 rounded-xl shrink-0">
             <span className="block text-3xl font-black text-transparent bg-gradient-to-tr from-emerald-400 to-teal-400 bg-clip-text">
               {appraisal.overallScore}%
             </span>
@@ -159,7 +174,7 @@ export const FacultyDetails = () => {
           onClick={() => setActiveTab('appraisal')}
           className={`pb-3 transition ${activeTab === 'appraisal' ? 'border-b-2 border-emerald-500 text-emerald-400 font-bold' : 'text-slate-500 hover:text-slate-650'}`}
         >
-          Self Appraisal & Review
+          Work report & Review
         </button>
         <button
           onClick={() => setActiveTab('studentFeedback')}

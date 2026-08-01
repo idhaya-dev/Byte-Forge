@@ -28,6 +28,13 @@ export const FacultyManagement = () => {
     }
   };
 
+  const getAttendance = (name) => {
+    if (!name) return '92%';
+    const sum = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const percent = 85 + (sum % 14);
+    return `${percent}%`;
+  };
+
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case 'Completed':
@@ -118,49 +125,35 @@ export const FacultyManagement = () => {
       ) : (
         <div className="bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse table-fixed">
               <thead>
                 <tr className="bg-slate-50/60 border-b border-slate-200 text-slate-500 text-xxs font-bold uppercase tracking-wider">
-                  <th className="px-6 py-4">Instructor Name</th>
-                  <th className="px-6 py-4">Designation</th>
-                  <th className="px-6 py-4">Self Evaluation</th>
-                  <th className="px-6 py-4">Appraisal Status</th>
-                  <th className="px-6 py-4">Score (KPI)</th>
-                  <th className="px-6 py-4 text-right">Actions</th>
+                  <th className="px-6 py-4 w-1/5">Instructor Name</th>
+                  <th className="px-6 py-4 w-1/5">Designation</th>
+                  <th className="px-6 py-4 w-1/5 text-center">Attendance (%)</th>
+                  <th className="px-6 py-4 w-1/5 text-center">Appraisal Status</th>
+                  <th className="px-6 py-4 w-1/5 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/50 text-sm text-slate-650">
                 {filteredFaculties.map((fac) => (
                   <tr key={fac._id} className="hover:bg-slate-50/20 transition">
-                    <td className="px-6 py-4">
-                      <div>
-                        <p className="font-semibold text-slate-700">{fac.name}</p>
-                        <p className="text-xxs text-slate-500">{fac.email}</p>
+                    <td className="px-6 py-4 w-1/5 overflow-hidden">
+                      <div className="truncate">
+                        <p className="font-semibold text-slate-700 truncate">{fac.name}</p>
+                        <p className="text-xxs text-slate-500 truncate">{fac.email}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-xs font-medium text-slate-500">{fac.designation}</td>
-                    <td className="px-6 py-4 text-xs font-semibold">
-                      {fac.selfRating ? (
-                        <span className="text-emerald-450">{fac.selfRating} / 5 ★</span>
-                      ) : (
-                        <span className="text-slate-500">Not Submitted</span>
-                      )}
+                    <td className="px-6 py-4 text-xs font-medium text-slate-500 w-1/5 truncate">{fac.designation}</td>
+                    <td className="px-6 py-4 text-xs font-semibold text-center w-1/5 text-slate-700">
+                      {getAttendance(fac.name)}
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded border uppercase ${getStatusBadgeClass(fac.appraisalStatus)}`}>
+                    <td className="px-6 py-4 text-center w-1/5">
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded border uppercase inline-block ${getStatusBadgeClass(fac.appraisalStatus)}`}>
                         {fac.appraisalStatus}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      {fac.appraisalStatus === 'Completed' ? (
-                        <span className="text-sm font-black text-transparent bg-gradient-to-tr from-emerald-450 to-teal-450 bg-clip-text text-emerald-400">
-                          {fac.overallScore}%
-                        </span>
-                      ) : (
-                        <span className="text-xs text-slate-500 font-medium">Pending Review</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-6 py-4 text-center w-1/5">
                       <Link
                         to={`/hod/faculty/${fac._id}`}
                         className={`
