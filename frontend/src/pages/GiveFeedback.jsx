@@ -12,24 +12,29 @@ const RATING_DESCRIPTIONS = {
 
 const RATING_PARAMETERS = [
   { 
-    key: 'teachingClarity', 
-    label: 'Teaching Clarity', 
-    desc: 'Clarity of concepts, structure of lectures, and ease of understanding.' 
+    key: 'teachingEffectiveness', 
+    label: 'Teaching Effectiveness', 
+    desc: 'Clarity of concepts, structure of lectures, teaching style, and ease of understanding.' 
   },
   { 
-    key: 'classroomInteraction', 
-    label: 'Classroom Interaction', 
-    desc: 'Encouraging student participation, questions, and active class discussion.' 
+    key: 'courseCoverage', 
+    label: 'Course Coverage', 
+    desc: 'Syllabus completion, pace of instruction, and coverage of topics.' 
   },
   { 
-    key: 'doubtClarification', 
-    label: 'Doubt Clarification', 
-    desc: 'Patience, responsiveness, and thoroughness when resolving student questions.' 
+    key: 'communicationSkills', 
+    label: 'Communication Skills', 
+    desc: 'Language clarity, audibility, and encouraging student interaction.' 
   },
   { 
-    key: 'practicalConceptsTaught', 
-    label: 'Practical Concepts Taught', 
-    desc: 'Integration of real-world examples, practical applications, and hands-on demonstrations.' 
+    key: 'punctuality', 
+    label: 'Punctuality & Discipline', 
+    desc: 'Regularity of classes, promptness in starting and ending lectures.' 
+  },
+  { 
+    key: 'supportOutsideClass', 
+    label: 'Support Outside Class', 
+    desc: 'Availability for doubts, guidance on projects/assignments, and approachability.' 
   },
 ];
 
@@ -55,10 +60,11 @@ export const GiveFeedback = () => {
   
   // 5-Star Rating parameters
   const [ratings, setRatings] = useState({
-    teachingClarity: 0,
-    classroomInteraction: 0,
-    doubtClarification: 0,
-    practicalConceptsTaught: 0,
+    teachingEffectiveness: 0,
+    courseCoverage: 0,
+    communicationSkills: 0,
+    punctuality: 0,
+    supportOutsideClass: 0,
   });
 
   // Slider State for Teaching Speed ('Slow', 'Normal', 'Fast') -> index 0, 1, 2
@@ -147,10 +153,11 @@ export const GiveFeedback = () => {
         setSemester('');
         setComments('');
         setRatings({
-          teachingClarity: 0,
-          classroomInteraction: 0,
-          doubtClarification: 0,
-          practicalConceptsTaught: 0,
+          teachingEffectiveness: 0,
+          courseCoverage: 0,
+          communicationSkills: 0,
+          punctuality: 0,
+          supportOutsideClass: 0,
         });
         setSpeedIndex(1);
 

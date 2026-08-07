@@ -2,6 +2,7 @@ import Feedback from '../models/Feedback.js';
 import FeedbackHistory from '../models/FeedbackHistory.js';
 import Announcement from '../models/Announcement.js';
 import User from '../models/User.js';
+import Appraisal from '../models/Appraisal.js';
 
 // @desc    Get all faculty members for student selection
 // @route   GET /api/student/faculties
@@ -125,6 +126,38 @@ export const submitFeedback = async (req, res) => {
       semester,
       academicYear,
     });
+
+    // 7. Aggregate all feedbacks for this faculty member and academic year, and update the corresponding Appraisal document
+    try {
+      const feedbacks = await Feedback.find({ facultyId, academicYear });
+      const totalResponses = feedbacks.length;
+      if (totalResponses > 0) {
+        const avgTeaching = feedbacks.reduce((acc, f) => acc + f.ratings.teachingEffectiveness, 0) / totalResponses;
+        const avgCoverage = feedbacks.reduce((acc, f) => acc + f.ratings.courseCoverage, 0) / totalResponses;
+        // Average of supportOutsideClass and communicationSkills represents approachability
+        const avgApproach = feedbacks.reduce((acc, f) => acc + (f.ratings.supportOutsideClass + f.ratings.communicationSkills) / 2, 0) / totalResponses;
+
+        let appraisal = await Appraisal.findOne({ faculty: facultyId, academicYear });
+        if (!appraisal) {
+          appraisal = new Appraisal({
+            faculty: facultyId,
+            academicYear,
+            status: 'Draft',
+            selfAppraisal: { submitted: false },
+            hodEvaluation: { submitted: false },
+          });
+        }
+        appraisal.studentFeedback = {
+          averageTeachingRating: Number(avgTeaching.toFixed(2)),
+          averageCourseCoverageRating: Number(avgCoverage.toFixed(2)),
+          averageApproachabilityRating: Number(avgApproach.toFixed(2)),
+          totalResponses,
+        };
+        await appraisal.save();
+      }
+    } catch (appraisalErr) {
+      console.error('Failed to update appraisal feedback metrics:', appraisalErr.message);
+    }
 
     res.status(201).json({
       success: true,

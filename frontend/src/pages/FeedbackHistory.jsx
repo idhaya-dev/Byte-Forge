@@ -133,7 +133,7 @@ export const FeedbackHistory = () => {
               <tbody className="divide-y divide-slate-800/50 text-sm text-slate-650">
                 {filteredHistory.map((item) => (
                   <tr key={item._id} className="hover:bg-slate-50/30 transition">
-                    <td className="px-6 py-4 font-semibold text-white">
+                    <td className="px-6 py-4 font-semibold text-slate-850">
                       {item.facultyId?.name || 'Unknown Faculty'}
                       <span className="block text-xxs text-slate-500 font-normal">
                         {item.facultyId?.designation || 'Instructor'}
