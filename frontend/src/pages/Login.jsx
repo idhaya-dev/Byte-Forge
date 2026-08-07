@@ -238,16 +238,6 @@ export const Login = () => {
               )}
             </button>
           </form>
-
-          {/* Student Sign Up link */}
-          {activeRole === 'Student' && (
-            <div className="mt-6 text-center text-xs">
-              <span className="text-slate-500">New Student? </span>
-              <Link to="/register" className={`font-bold transition hover:underline ${theme.accent}`}>
-                Create Student Account &rarr;
-              </Link>
-            </div>
-          )}
         </div>
 
         {/* Technical Notice */}
